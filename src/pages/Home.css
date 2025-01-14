@@ -1,0 +1,54 @@
+/* Estilos gerais */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f1de; /* Bege claro */
+  }
+  
+  /* Container da página inicial */
+  .home-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+  }
+  
+  /* Conteúdo da página inicial */
+  .home-content {
+    background-color: #ffffff; /* Branco */
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+  }
+  
+  /* Título */
+  .home-content h1 {
+    margin-bottom: 1rem;
+    color: #3d405b; /* Azul escuro */
+    font-size: 2rem;
+  }
+  
+  /* Parágrafo */
+  .home-content p {
+    color: #666;
+    font-size: 1.2rem;
+  }
+  
+  /* Responsividade para celular */
+  @media (max-width: 480px) {
+    .home-content {
+      padding: 1.5rem;
+      margin: 0 1rem;
+    }
+  
+    .home-content h1 {
+      font-size: 1.5rem;
+    }
+  
+    .home-content p {
+      font-size: 1rem;
+    }
+  }
