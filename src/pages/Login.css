@@ -1,277 +1,87 @@
-<<<<<<< HEAD
 /* Estilos gerais */
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f4f1de; /* Bege claro */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  /* Container do login */
-  .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-  }
-  
-  /* Caixa de login */
-  .login-box {
-    background-color: #ffffff; /* Branco */
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 100%;
-    max-width: 400px;
-  }
-  
-  /* Título */
-  .login-box h1 {
-    margin-bottom: 1.5rem;
-    color: #3d405b; /* Azul escuro */
-    font-size: 2rem;
-  }
-  
-  /* Campos de entrada */
-  .login-input {
-    width: 100%;
-    padding: 0.75rem;
-    margin: 0.5rem 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-    outline: none;
-  }
-  
-  .login-input:focus {
-    border-color: #3d405b; /* Azul escuro */
-  }
-  
-  /* Botão de login */
-  .login-button {
-    width: 100%;
-    padding: 0.75rem;
-    margin-top: 1rem;
-    background-color: #3d405b; /* Azul escuro */
-    color: #ffffff; /* Branco */
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .login-button:hover {
-    background-color: #2a2c3d; /* Azul mais escuro */
-  }
-  
-  /* Responsividade para celular */
-  @media (max-width: 480px) {
-    .login-box {
-      padding: 1.5rem;
-      margin: 0 1rem;
-    }
-  
-    .login-box h1 {
-      font-size: 1.5rem;
-    }
-  
-    .login-input,
-    .login-button {
-      font-size: 0.9rem;
-    }
-  }
-=======
-/* src/pages/Login.css */
-
-/* Garantir que os estilos aplicados sejam específicos para a página de login */
-.login-page * {
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.login-page html, .login-page body {
-  height: 100%;
-}
-
-.login-page body {
-  font-family: 'Arial', sans-serif;
+  font-family: Arial, sans-serif;
+  background-color: #f4f1de; /* Bege claro */
   display: flex;
-  justify-content: center; /* Centraliza horizontalmente */
-  align-items: center; /* Centraliza verticalmente */
-  height: 100%;
-  overflow: hidden;
-  background-color: #f4f4f4;
-  position: relative;
-  
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-.login-page .video-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1; /* Garante que o vídeo fique atrás do conteúdo */
-  background-image: url('https://media.giphy.com/media/TTN135lU38ep7e2wfR/giphy.gif');
-  background-size: cover;
-  background-position: center;
-  
-  pointer-events: none;
-}
-
-.login-page .login-container {
-  position: relative;
-  z-index: 2; /* Fixa o formulário acima do fundo */
+/* Container do login */
+.login-container {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
-  padding: 20px;
 }
 
-.login-page .login-form {
-  background: rgba(255, 255, 255, 0.8); /* Fundo transparente com opacidade */
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+/* Caixa de login */
+.login-box {
+  background-color: #ffffff; /* Branco */
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 100%;
   max-width: 400px;
+}
+
+/* Título */
+.login-box h1 {
+  margin-bottom: 1.5rem;
+  color: #3d405b; /* Azul escuro */
+  font-size: 2rem;
+}
+
+/* Campos de entrada */
+.login-input {
   width: 100%;
-  text-align: center;
-  transition: transform 0.3s ease;
-}
-
-.login-page .login-form:hover {
-  transform: translateY(-5px);
-}
-
-.login-page .login-form h2 {
-  margin-bottom: 30px;
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-  text-align: center;
-  letter-spacing: 1px;
-}
-
-.login-page .login-form label {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 14px;
-  color: #777;
-  text-align: left;
-}
-
-.login-page .login-form input {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 20px;
-  border: 2px solid #ddd;
-  border-radius: 6px;
-  font-size: 16px;
-  transition: border-color 0.3s ease;
-}
-
-.login-page .login-form input:focus {
-  border-color: #3498db;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
   outline: none;
 }
 
-.login-page .login-form button {
+.login-input:focus {
+  border-color: #3d405b; /* Azul escuro */
+}
+
+/* Botão de login */
+.login-button {
   width: 100%;
-  padding: 12px;
-  background-color: #3498db;
-  color: #fff;
-  font-size: 16px;
+  padding: 0.75rem;
+  margin-top: 1rem;
+  background-color: #3d405b; /* Azul escuro */
+  color: #ffffff; /* Branco */
   border: none;
-  border-radius: 6px;
+  border-radius: 5px;
+  font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.login-page .login-form button:hover {
-  background-color: #2980b9;
+.login-button:hover {
+  background-color: #2a2c3d; /* Azul mais escuro */
 }
 
-.login-page .login-form button:active {
-  background-color: #1c5980;
-}
-
-.login-page .error {
-  color: #e74c3c;
-  font-size: 14px;
-  margin-bottom: 15px;
-  text-align: left;
-}
-
-.login-page .forgot-password {
-  font-size: 14px;
-  color: #3498db;
-  text-decoration: none;
-  margin-top: 10px;
-  display: block;
-  text-align: center;
-  transition: color 0.3s ease;
-}
-
-.login-page .forgot-password:hover {
-  color: #2980b9;
-}
-
-/* Responsividade para dispositivos móveis */
-@media (max-width: 768px) {
-  .login-page .login-container {
-    padding: 10px; /* Menos espaçamento em dispositivos móveis */
+/* Responsividade para celular */
+@media (max-width: 480px) {
+  .login-box {
+    padding: 1.5rem;
+    margin: 0 1rem;
   }
 
-  .login-page .login-form {
-    padding: 20px;
-    max-width: 100%; /* O formulário pode ocupar toda a largura no celular */
+  .login-box h1 {
+    font-size: 1.5rem;
   }
 
-  .login-page .login-form h2 {
-    font-size: 20px; /* Tamanho da fonte do título reduzido no celular */
-  }
-
-  .login-page .login-form label {
-    font-size: 12px;
-  }
-
-  .login-page .login-form input,
-  .login-page .login-form button {
-    font-size: 14px; /* Ajuste no tamanho da fonte */
-  }
-
-  .login-page .video-background {
-    background-position: center;
-    opacity: 0.9; /* Ajustar opacidade para o fundo não sobrecarregar a tela */
+  .login-input,
+  .login-button {
+    font-size: 0.9rem;
   }
 }
-
-@media (max-width: 500px) {
-  .login-page .login-form {
-    padding: 15px;
-    max-width: 100%;
-  }
-
-  .login-page .login-form h2 {
-    font-size: 18px;
-  }
-
-  .login-page .login-form input,
-  .login-page .login-form button {
-    font-size: 12px; /* Menor fonte para telas pequenas */
-  }
-
-  .login-page .video-background {
-    opacity: 0.8;
-  }
-}
->>>>>>> 57d70b2e12bf9631cbc77a83807ca98304517942
