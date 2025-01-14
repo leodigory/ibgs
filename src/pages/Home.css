@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Estilos gerais */
 body {
     margin: 0;
@@ -52,3 +53,27 @@ body {
       font-size: 1rem;
     }
   }
+=======
+/* src/pages/Home.css */
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+    color: #2c3e50;
+    text-align: center;
+  }
+  
+  .home-container h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+  
+  .home-container p {
+    font-size: 18px;
+    color: #7f8c8d;
+  }
+  
+>>>>>>> 57d70b2e12bf9631cbc77a83807ca98304517942

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -40,3 +41,27 @@
 .read-the-docs {
   color: #888;
 }
+=======
+/* src/App.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #212529;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  a:hover {
+    color: #3498db;
+  }
+  
+  h1, h2, h3 {
+    margin: 0;
+    font-weight: bold;
+  }
+  
+>>>>>>> 57d70b2e12bf9631cbc77a83807ca98304517942
