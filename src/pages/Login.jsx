@@ -8,11 +8,14 @@ export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Simulação de login
-    login({ name: 'Usuário', email });
-    navigate('/'); // Redireciona para a página inicial após o login
+    try {
+      await login(email, password); // Faz o login
+      navigate('/'); // Redireciona para a página inicial após o login
+    } catch (error) {
+      alert(error.message); // Exibe uma mensagem de erro
+    }
   };
 
   return (
