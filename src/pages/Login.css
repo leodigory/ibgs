@@ -1,0 +1,70 @@
+/* Estilos gerais */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5dc; /* Bege claro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Container do login */
+  .login-container {
+    background-color: #ffffff; /* Branco */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  /* Título */
+  .login-container h1 {
+    color: #8b7355; /* Bege escuro */
+    margin-bottom: 20px;
+  }
+  
+  /* Campos de entrada */
+  .login-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  /* Botão */
+  .login-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #8b7355; /* Bege escuro */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .login-container button:hover {
+    background-color: #6b5a45; /* Bege mais escuro */
+  }
+  
+  /* Responsividade para celulares */
+  @media (max-width: 480px) {
+    .login-container {
+      padding: 15px;
+    }
+  
+    .login-container h1 {
+      font-size: 24px;
+    }
+  
+    .login-container input,
+    .login-container button {
+      font-size: 14px;
+    }
+  }
