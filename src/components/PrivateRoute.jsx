@@ -1,14 +1,14 @@
+import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 
-export default function PrivateRoute({ children }) {
-  const { user } = useAuth(); // Obtém o estado de autenticação
+const isAuthenticated = () => {
+  // Aqui você pode implementar a lógica para verificar se o usuário está autenticado
+  // Por exemplo, verificar se há um token no localStorage
+  return localStorage.getItem('token') !== null;
+};
 
-  // Se o usuário não estiver autenticado, redirecione para a página de login
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
+const PrivateRoute = ({ children }) => {
+  return isAuthenticated() ? children : <Navigate to="/login" />;
+};
 
-  // Se o usuário estiver autenticado, renderize o componente filho
-  return children;
-}
+export default PrivateRoute;

@@ -1,20 +1,12 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import AdminPage from './pages/AdminPage';
-import MembersPage from './pages/MembersPage';
-import NotFound from './pages/NotFound';
+import React from 'react';
 
-export default function App() {
+const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/admin" element={<AdminPage />} />
-        <Route path="/members" element={<MembersPage />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <div>
+      <h1>Bem-vindo ao IBGS</h1>
+      <p>Você está logado!</p>
+    </div>
   );
-}
+};
+
+export default App;
