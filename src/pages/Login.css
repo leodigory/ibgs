@@ -34,7 +34,7 @@ body {
 /* Lado direito (imagem) */
 .login-image {
   flex: 1;
-  background-image: url('/src/assets/login-image.jpg'); /* Mantido o local da imagem */
+  background-image: url('/public/login-image.jpg'); /* Mantido o local da imagem */
   background-size: cover;
   background-position: center;
   position: relative;
@@ -111,7 +111,7 @@ body {
     max-width: 100%;
     border-radius: 0;
     height: 100vh;
-    background-image: url('/src/assets/login-image.jpg'); /* Imagem de fundo */
+    background-image: url('/public/login-image.jpg'); /* Imagem de fundo */
     background-size: cover;
     background-position: center;
     box-shadow: none;
