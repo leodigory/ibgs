@@ -35,6 +35,9 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button onClick={handleLogin}>Entrar</button>
+        <p className="signup-text" onClick={() => navigate('/signup')}>
+          Não tem uma conta? <span>Cadastre-se</span>
+        </p>
       </div>
       <div className="login-image"></div> {/* Lado direito (imagem) */}
     </div>

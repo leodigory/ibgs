@@ -100,43 +100,101 @@ body {
   transform: scale(0.98); /* Efeito de clique */
 }
 
+/* Estilo para o texto de cadastro */
+.signup-text {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #8b7355; /* Bege escuro */
+  cursor: pointer;
+  text-align: center;
+}
+
+.signup-text span {
+  color: #d4ba99; /* Bege mais escuro */
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.signup-text:hover span {
+  color: #fcad45; /* Bege escuro */
+}
+
 /* Responsividade para celulares */
 @media (max-width: 768px) {
   body {
-    background-color: transparent; /* Remove o fundo bege claro */
-  }
-
-  .login-page {
-    flex-direction: column;
-    max-width: 100%;
-    border-radius: 0;
-    height: 100vh;
+    margin: 0;
+    background-color: #f5f5dc; /* Fundo bege claro para fallback */
     background-image: url('/public/login-image.jpg'); /* Imagem de fundo */
     background-size: cover;
     background-position: center;
-    box-shadow: none;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .login-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    background-color: transparent;
   }
 
   .login-container {
-    background-color: rgba(255, 255, 255, 0.95); /* Fundo branco com mais transparência */
-    padding: 20px;
-    border-radius: 10px;
-    margin: 20px;
-    width: 90%;
-    max-width: 400px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra suave */
-  }
-
-  .login-image {
-    display: none; /* Esconde a imagem em telas menores */
+    background-color: rgba(255, 255, 255, 0.3); /* Fundo branco com maior transparência */
+    padding: 30px;
+    border-radius: 15px; /* Bordas levemente arredondadas */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra mais pronunciada */
+    width: 85%;
+    max-width: 350px; /* Largura máxima reduzida para um formato mais quadrado */
+    text-align: center;
   }
 
   .login-container h1 {
-    font-size: 24px;
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #ffffff; /* Bege escuro */
   }
 
-  .login-container input,
-  .login-container button {
+  .login-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
     font-size: 14px;
+  }
+
+  .login-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #8b7355; /* Bege escuro */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .login-container button:hover {
+    background-color: #6b5a45; /* Bege mais escuro */
+  }
+
+  .signup-text {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #ffffff; /* Bege escuro */
+  }
+
+  .signup-text span {
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
   }
 }
