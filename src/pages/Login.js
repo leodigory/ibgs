@@ -21,7 +21,13 @@ function Login() {
   return (
     <div className="login-page">
       <div className="login-container">
-        <h1>Login</h1>
+        {/* Logo SVG */}
+        <img 
+          src="/logo.png" 
+          alt="Logo da Igreja" 
+          className="church-logo"
+        />
+        <h1>Continue em comunhão</h1>
         <input
           type="text"
           placeholder="Usuário"

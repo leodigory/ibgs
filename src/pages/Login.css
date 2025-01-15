@@ -40,6 +40,12 @@ body {
   position: relative;
 }
 
+.church-logo {
+  width: 120px; /* Ajuste o tamanho da logo */
+  height: auto; /* Mantém a proporção */
+  margin-bottom: 20px; /* Espaço abaixo da logo */
+}
+
 /* Efeito de overlay na imagem */
 .login-image::before {
   content: '';
@@ -58,6 +64,7 @@ body {
   font-size: 28px;
   font-weight: 600;
 }
+
 
 /* Campos de entrada */
 .login-container input {
@@ -147,19 +154,25 @@ body {
 
   .login-container {
     background-color: rgba(255, 255, 255, 0.3); /* Fundo branco com maior transparência */
-    padding: 30px;
+    padding: 25px;
     border-radius: 15px; /* Bordas levemente arredondadas */
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra mais pronunciada */
-    width: 85%;
+    width: 80%;
     max-width: 350px; /* Largura máxima reduzida para um formato mais quadrado */
     text-align: center;
   }
 
+  .church-logo {
+    width: 80px; /* Reduzi o tamanho da logo */
+    margin-bottom: 0px; /* Diminui o espaço abaixo da logo */
+  }
+
   .login-container h1 {
     font-size: 20px;
-    margin-bottom: 15px;
-    color: #ffffff; /* Bege escuro */
+    margin-bottom: 10px; /* Diminui o espaço abaixo do título */
+    color: #ffffff; /* Cor do título ajustada para melhor contraste */
   }
+
 
   .login-container input {
     width: 100%;
@@ -189,7 +202,7 @@ body {
   .signup-text {
     margin-top: 10px;
     font-size: 12px;
-    color: #ffffff; /* Bege escuro */
+    color: #ffffff; 
   }
 
   .signup-text span {
@@ -198,3 +211,4 @@ body {
     cursor: pointer;
   }
 }
+
