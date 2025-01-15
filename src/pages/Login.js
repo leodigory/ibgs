@@ -27,7 +27,7 @@ function Login() {
           alt="Logo da Igreja" 
           className="church-logo"
         />
-        <h1>Continue em comunhão</h1>
+        <h1>Continue na comunidade</h1>
         <input
           type="text"
           placeholder="Usuário"
