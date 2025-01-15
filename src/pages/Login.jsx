@@ -8,8 +8,7 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // Aqui você pode implementar a lógica de autenticação
-    // Por exemplo, fazer uma requisição para uma API
+    // Lógica de autenticação simples
     if (username === 'admin' && password === 'password') {
       localStorage.setItem('token', 'fake-token');
       navigate('/');
