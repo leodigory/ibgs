@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useAuth();
+  const { login } = useAuth(); // Obtém a função de login do contexto
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -27,12 +27,14 @@ export default function Login() {
           placeholder="E-mail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required // Adiciona validação de campo obrigatório
         />
         <input
           type="password"
           placeholder="Senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required // Adiciona validação de campo obrigatório
         />
         <button type="submit">Entrar</button>
       </form>
