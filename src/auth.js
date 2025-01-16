@@ -1,5 +1,5 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore"; // Importa funções do Firestore
+import { doc, setDoc, getDoc } from "firebase/firestore"; // Importa funções do Firestore
 import { auth, db } from './firebase'; // Importa auth e db
 
 // Função para cadastrar um novo usuário
@@ -40,6 +40,20 @@ export const logout = async () => {
     await signOut(auth);
   } catch (error) {
     console.error("Erro ao fazer logout:", error.message);
+    throw error;
+  }
+};
+
+// Função para buscar o role do usuário no Firestore
+export const getUserRole = async (uid) => {
+  try {
+    const userDoc = await getDoc(doc(db, "users", uid)); // Busca o documento do usuário no Firestore
+    if (userDoc.exists()) {
+      return userDoc.data().role; // Retorna o role do usuário
+    }
+    return "guest"; // Role padrão caso o documento não exista
+  } catch (error) {
+    console.error("Erro ao buscar o role do usuário:", error.message);
     throw error;
   }
 };
