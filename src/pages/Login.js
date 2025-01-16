@@ -1,20 +1,28 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Login.css'; // Importe o CSS
+import { signIn } from '../auth'; // Importa a função de login do Firebase
+import { doc, getDoc } from "firebase/firestore"; // Importa funções do Firestore
+import { db } from '../firebase'; // Importa o Firestore
+import './Login.css';
 
 function Login() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    // Simulação de autenticação
-    if (username === 'admin' && password === 'admin123') {
-      navigate('/home', { state: { role: 'admin' } });
-    } else if (username === 'pastor' && password === 'pastor123') {
-      navigate('/home', { state: { role: 'pastor' } });
-    } else {
-      alert('Credenciais inválidas!');
+  const handleLogin = async () => {
+    try {
+      // Autentica o usuário com Firebase
+      const user = await signIn(email, password);
+
+      // Busca o papel (role) do usuário no Firestore
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      const userRole = userDoc.data().role || 'visitante'; // Define o papel padrão como 'visitante'
+
+      // Redireciona para a página inicial com base no papel (role) do usuário
+      navigate('/home', { state: { role: userRole } });
+    } catch (error) {
+      alert('Credenciais inválidas!'); // Exibe um alerta em caso de erro
     }
   };
 
@@ -28,19 +36,29 @@ function Login() {
           className="church-logo"
         />
         <h1>Continue na comunidade</h1>
+
+        {/* Campo de E-mail */}
         <input
-          type="text"
-          placeholder="Usuário"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          type="email"
+          placeholder="E-mail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
         />
+
+        {/* Campo de Senha */}
         <input
           type="password"
           placeholder="Senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
+
+        {/* Botão de Entrar */}
         <button onClick={handleLogin}>Entrar</button>
+
+        {/* Texto de Cadastro */}
         <p className="signup-text" onClick={() => navigate('/signup')}>
           Não tem uma conta? <span>Cadastre-se</span>
         </p>
