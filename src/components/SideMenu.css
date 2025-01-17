@@ -1,0 +1,61 @@
+/* Estilos gerais do menu */
+.side-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #8b7355; /* Bege escuro */
+    color: white;
+    width: 60px;
+    transition: width 0.3s;
+  }
+  
+  .side-menu.expanded {
+    width: 250px;
+  }
+  
+  .menu-icon {
+    padding: 20px;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .side-menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: none;
+  }
+  
+  .side-menu.expanded ul {
+    display: block;
+  }
+  
+  .side-menu ul li {
+    padding: 15px 20px;
+    cursor: pointer;
+  }
+  
+  .side-menu ul li:hover {
+    background-color: #6b5a45; /* Bege mais escuro */
+  }
+  
+  /* Responsividade para celulares */
+  @media (max-width: 480px) {
+    .side-menu {
+      width: 50px;
+    }
+  
+    .side-menu.expanded {
+      width: 200px;
+    }
+  
+    .menu-icon {
+      padding: 15px;
+      font-size: 20px;
+    }
+  
+    .side-menu ul li {
+      padding: 10px 15px;
+    }
+  }

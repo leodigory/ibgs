@@ -1,49 +1,51 @@
 /* Estilos gerais */
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f5f5dc; /* Bege claro */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  /* Container da home */
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5dc; /* Bege claro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Container da home */
+.home-container {
+  background-color: #ffffff; /* Branco */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  margin-left: 60px; /* Espaço para o menu lateral */
+}
+
+/* Título */
+.home-container h1 {
+  color: #8b7355; /* Bege escuro */
+  margin-bottom: 20px;
+}
+
+/* Parágrafos */
+.home-container p {
+  color: #333;
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+/* Responsividade para celulares */
+@media (max-width: 480px) {
   .home-container {
-    background-color: #ffffff; /* Branco */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 600px;
-    text-align: center;
+    padding: 15px;
+    margin-left: 50px; /* Ajuste para o menu lateral em celulares */
   }
-  
-  /* Título */
+
   .home-container h1 {
-    color: #8b7355; /* Bege escuro */
-    margin-bottom: 20px;
+    font-size: 24px;
   }
-  
-  /* Parágrafos */
+
   .home-container p {
-    color: #333;
-    font-size: 18px;
-    margin: 10px 0;
+    font-size: 16px;
   }
-  
-  /* Responsividade para celulares */
-  @media (max-width: 480px) {
-    .home-container {
-      padding: 15px;
-    }
-  
-    .home-container h1 {
-      font-size: 24px;
-    }
-  
-    .home-container p {
-      font-size: 16px;
-    }
-  }
+}
