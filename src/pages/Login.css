@@ -20,7 +20,6 @@ body {
   border-radius: 15px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  max-width: 1500px;
   width: 100%;
 }
 
@@ -68,7 +67,7 @@ body {
 
 /* Campos de entrada */
 .login-container input {
-  width: 100%; /* Corrigido para 100% */
+  width: 100%;
   padding: 12px;
   margin: 10px 0;
   border: 1px solid #ddd;
@@ -189,11 +188,11 @@ body {
   .login-container h1 {
     font-size: 20px;
     margin-bottom: 10px; /* Diminui o espaço abaixo do título */
-    color: #ffffff; /* Cor do título ajustada para melhor contraste */
+    color: #ffffff; /* Cor do título ajustada para melhor contraste12 */
   }
 
   .login-container input {
-    width: 100%; /* Corrigido para 100% */
+    width: 100%;
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ddd;
