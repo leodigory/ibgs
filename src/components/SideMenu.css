@@ -1,61 +1,109 @@
 /* Estilos gerais do menu */
 .side-menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    background-color: #8b7355; /* Bege escuro */
-    color: white;
-    width: 60px;
-    transition: width 0.3s;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: #8b7355; /* Bege escuro */
+  color: white;
+  width: 60px;
+  transition: width 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribui o espaço entre os itens */
+}
+
+.side-menu.expanded {
+  width: 250px;
+}
+
+.menu-icon {
+  padding: 20px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.side-menu ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: none;
+  flex-grow: 1; /* Faz o conteúdo ocupar o espaço disponível */
+}
+
+.side-menu.expanded ul {
+  display: block;
+}
+
+.side-menu ul li {
+  padding: 15px 20px;
+  cursor: pointer;
+}
+
+.side-menu ul li:hover {
+  background-color: #6b5a45; /* Bege mais escuro */
+}
+
+/* Container do botão de Logout */
+.logout-container {
+  padding: 20px;
+  text-align: center; /* Centraliza o botão */
+  border-top: 1px solid #6b5a45; /* Linha separadora */
+  flex-shrink: 0; /* Impede que o container encolha */
+}
+
+/* Estilo do botão de Logout */
+.logout-button {
+  background-color: transparent; /* Fundo transparente */
+  color: white; /* Cor do texto */
+  border: none; /* Remove a borda */
+  margin-left: -15px;
+  padding: 0; /* Remove o padding interno */
+  font-size: 16px; /* Tamanho da fonte para o texto */
+  cursor: pointer; /* Cursor de ponteiro */
+  width: 100%; /* Ocupa toda a largura do container */
+  transition: font-size 0.3s ease; /* Transição suave */
+}
+
+/* Estilo do ícone de Logout */
+.logout-icon {
+  width: 34px; /* Tamanho do ícone */
+  height: 34px; /* Tamanho do ícone */
+}
+
+.logout-button:hover {
+  opacity: 0.8; /* Efeito de transparência ao passar o mouse */
+}
+
+/* Responsividade para celulares */
+@media (max-width: 480px) {
+  .side-menu {
+    width: 50px;
   }
-  
+
   .side-menu.expanded {
-    width: 250px;
+    width: 200px;
   }
-  
+
   .menu-icon {
-    padding: 20px;
-    font-size: 24px;
-    cursor: pointer;
+    padding: 15px;
+    font-size: 20px;
   }
-  
-  .side-menu ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    display: none;
-  }
-  
-  .side-menu.expanded ul {
-    display: block;
-  }
-  
+
   .side-menu ul li {
-    padding: 15px 20px;
-    cursor: pointer;
+    padding: 10px 15px;
   }
-  
-  .side-menu ul li:hover {
-    background-color: #6b5a45; /* Bege mais escuro */
+
+  .logout-container {
+    padding: 15px;
   }
-  
-  /* Responsividade para celulares */
-  @media (max-width: 480px) {
-    .side-menu {
-      width: 50px;
-    }
-  
-    .side-menu.expanded {
-      width: 200px;
-    }
-  
-    .menu-icon {
-      padding: 15px;
-      font-size: 20px;
-    }
-  
-    .side-menu ul li {
-      padding: 10px 15px;
-    }
+
+  .logout-button {
+    font-size: 14px; /* Tamanho da fonte menor para celulares */
   }
+
+  .logout-icon {
+    width: 20px; /* Tamanho do ícone menor para celulares */
+    height: 20px; /* Tamanho do ícone menor para celulares */
+  }
+}

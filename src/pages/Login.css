@@ -51,20 +51,6 @@ body {
   align-items: center;
 }
 
-/* Lado direito (imagem) */
-.login-image {
-  flex: 1;
-  background-image: url('/public/pastor1.jpg');
-  background-size: 100% 100%; /* Estica a imagem para preencher o espaço */
-  background-position: center; /* Centraliza a imagem */
-  position: relative;
-  -webkit-mask: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 1) 28%, /* Opaco no topo */
-    rgba(0, 0, 0, 0) 36%  /* Transparente na base */
-  ); /* Prefixo para compatibilidade com navegadores WebKit */
-}
-
 /* Campos de entrada */
 .login-container input {
   width: 100%;

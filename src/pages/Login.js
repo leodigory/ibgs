@@ -48,7 +48,7 @@ function Login() {
           alt="Logo da Igreja" 
           className="church-logo"
         />
-        <h1>Continue na comunidade</h1>
+        <h1>Continue na comunidade!</h1>
 
         {/* Campo de E-mail */}
         <input
