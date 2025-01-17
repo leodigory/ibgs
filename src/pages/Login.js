@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { signIn } from '../auth'; // Importa a função de login do Firebase
 import { doc, getDoc } from "firebase/firestore"; // Importa funções do Firestore
 import { db } from '../firebase'; // Importa o Firestore
@@ -8,9 +8,22 @@ import './Login.css';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(''); // Estado para mensagens de erro
+  const [successMessage, setSuccessMessage] = useState(''); // Estado para mensagens de sucesso
   const navigate = useNavigate();
+  const location = useLocation(); // Hook para acessar o estado de navegação
+
+  // Verifica se o estado de sucesso foi passado
+  useEffect(() => {
+    if (location.state?.signupSuccess) {
+      setSuccessMessage('Cadastro realizado com sucesso!'); // Define a mensagem de sucesso
+    }
+  }, [location.state]);
 
   const handleLogin = async () => {
+    setError(''); // Limpa mensagens de erro anteriores
+    setSuccessMessage(''); // Limpa mensagens de sucesso anteriores
+
     try {
       // Autentica o usuário com Firebase
       const user = await signIn(email, password);
@@ -22,7 +35,7 @@ function Login() {
       // Redireciona para a página inicial com base no papel (role) do usuário
       navigate('/home', { state: { role: userRole } });
     } catch (error) {
-      alert('Credenciais inválidas!'); // Exibe um alerta em caso de erro
+      setError('Credenciais inválidas!'); // Define a mensagem de erro
     }
   };
 
@@ -54,6 +67,16 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+
+        {/* Mensagem de Sucesso */}
+        {successMessage && (
+          <div className="success-message">{successMessage}</div>
+        )}
+
+        {/* Mensagem de Erro */}
+        {error && (
+          <div className="error-message">{error}</div>
+        )}
 
         {/* Botão de Entrar */}
         <button onClick={handleLogin}>Entrar</button>
