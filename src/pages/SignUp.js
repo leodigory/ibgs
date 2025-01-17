@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc, collection, query, where, getDocs } from "firebase/firestore";
+import { createUserWithEmailAndPassword, fetchSignInMethodsForEmail } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from '../firebase';
 import './SignUp.css';
 
@@ -14,6 +14,13 @@ function SignUp() {
   const [birthDate, setBirthDate] = useState('');
   const [gender, setGender] = useState('');
   const [error, setError] = useState('');
+  const [nameError, setNameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [phoneError, setPhoneError] = useState(false);
+  const [addressError, setAddressError] = useState(false);
+  const [birthDateError, setBirthDateError] = useState(false);
+  const [genderError, setGenderError] = useState(false);
   const navigate = useNavigate();
 
   const validateName = (name) => {
@@ -31,61 +38,78 @@ function SignUp() {
 
   const handlePhoneChange = (e) => {
     const inputValue = e.target.value;
-    // Remove todos os caracteres que não são números
     const numericValue = inputValue.replace(/\D/g, '');
-    setPhone(numericValue); // Atualiza o estado apenas com números
+    setPhone(numericValue);
   };
 
-  const checkIfUserExists = async (name, email) => {
-    // Verifica se já existe um usuário com o mesmo nome ou e-mail
-    const usersRef = collection(db, "users");
-    const nameQuery = query(usersRef, where("name", "==", name));
-    const emailQuery = query(usersRef, where("email", "==", email));
-
-    const [nameSnapshot, emailSnapshot] = await Promise.all([
-      getDocs(nameQuery),
-      getDocs(emailQuery),
-    ]);
-
-    if (!nameSnapshot.empty) {
-      return "Já existe um usuário com este nome.";
+  const checkIfEmailExists = async (email) => {
+    try {
+      const methods = await fetchSignInMethodsForEmail(auth, email);
+      return methods.length > 0;
+    } catch (error) {
+      console.error("Erro ao verificar e-mail:", error.message);
+      return false;
     }
-
-    if (!emailSnapshot.empty) {
-      return "Já existe um usuário com este e-mail.";
-    }
-
-    return null;
   };
 
   const handleSignUp = async () => {
     setError(''); // Limpa o erro anterior
+    setNameError(false);
+    setEmailError(false);
+    setPasswordError(false);
+    setPhoneError(false);
+    setAddressError(false);
+    setBirthDateError(false);
+    setGenderError(false);
+
+    let hasError = false;
 
     if (!validateName(name)) {
-      setError('Por favor, insira seu nome completo (nome e sobrenome).');
-      return;
+      setNameError(true);
+      hasError = true;
     }
 
-    if (!email || !password || !phone || !address || !birthDate || !gender) {
-      setError('Por favor, preencha todos os campos obrigatórios.');
-      return;
-    }
-
-    if (!validateAddress(address)) {
-      setError('Por favor, insira o número da casa no endereço.');
-      return;
+    if (!email) {
+      setEmailError(true);
+      hasError = true;
     }
 
     if (!validatePassword(password)) {
-      setError('A senha deve ter no mínimo 6 caracteres.');
+      setPasswordError(true);
+      hasError = true;
+    }
+
+    if (!phone) {
+      setPhoneError(true);
+      hasError = true;
+    }
+
+    if (!validateAddress(address)) {
+      setAddressError(true);
+      hasError = true;
+    }
+
+    if (!birthDate) {
+      setBirthDateError(true);
+      hasError = true;
+    }
+
+    if (!gender) {
+      setGenderError(true);
+      hasError = true;
+    }
+
+    if (hasError) {
+      setError('Por favor, corrija os campos destacados.');
       return;
     }
 
     try {
-      // Verifica se já existe um usuário com o mesmo nome ou e-mail
-      const userExistsError = await checkIfUserExists(name, email);
-      if (userExistsError) {
-        setError(userExistsError);
+      // Verifica se o e-mail já está em uso
+      const emailExists = await checkIfEmailExists(email);
+      if (emailExists) {
+        setEmailError(true);
+        setError('Este e-mail já está em uso. Por favor, use outro e-mail.');
         return;
       }
 
@@ -110,7 +134,8 @@ function SignUp() {
     } catch (error) {
       console.error("Erro ao cadastrar usuário:", error.message);
       if (error.code === 'auth/email-already-in-use') {
-        setError('Este e-mail já está em uso. Por favor, use outro e-mail.');
+        setEmailError(true);
+        setError('Este e-mail já está cadastrado. Por favor, use outro e-mail.');
       } else {
         setError('Erro ao cadastrar: ' + error.message);
       }
@@ -125,14 +150,19 @@ function SignUp() {
 
         {error && <div className="error-message">{error}</div>}
 
+        {/* Campo Nome Completo */}
+        <label className="input-label">Nome Completo</label>
         <input
           type="text"
-          placeholder="Nome Completo (Nome e Sobrenome)"
+          placeholder="Digite seu nome completo"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          className={nameError ? 'input-error' : ''}
           required
         />
 
+        {/* Seleção de Gênero */}
+        <label className="input-label"></label>
         <div className="gender-selection">
           <label>
             <input
@@ -160,45 +190,60 @@ function SignUp() {
           </label>
         </div>
 
+        {/* Campo E-mail */}
+        <label className="input-label">E-mail</label>
         <input
           type="email"
-          placeholder="E-mail"
+          placeholder="Digite seu e-mail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          className={emailError ? 'input-error' : ''}
           required
         />
 
+        {/* Campo Senha */}
+        <label className="input-label">Senha</label>
         <input
           type="password"
-          placeholder="Senha (mínimo 6 dígitos)"
+          placeholder="Digite sua senha (mínimo 6 dígitos)"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          className={passwordError ? 'input-error' : ''}
           required
         />
 
+        {/* Campo Telefone */}
+        <label className="input-label">Telefone</label>
         <input
           type="tel"
-          placeholder="Telefone"
+          placeholder="Digite seu telefone"
           value={phone}
           onChange={handlePhoneChange}
-          inputMode="numeric" // Mostra o teclado numérico em dispositivos móveis
-          pattern="[0-9]*"   // Garante que apenas números sejam aceitos
+          className={phoneError ? 'input-error' : ''}
+          inputMode="numeric"
+          pattern="[0-9]*"
           required
         />
 
+        {/* Campo Endereço */}
+        <label className="input-label">Endereço</label>
         <input
           type="text"
-          placeholder="Endereço (incluindo número da casa)"
+          placeholder="Digite seu endereço (incluindo número)"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
+          className={addressError ? 'input-error' : ''}
           required
         />
 
+        {/* Campo Data de Nascimento */}
+        <label className="input-label">Data de Nascimento</label>
         <input
           type="date"
-          placeholder="Data de Nascimento"
+          placeholder="Digite sua data de nascimento"
           value={birthDate}
           onChange={(e) => setBirthDate(e.target.value)}
+          className={birthDateError ? 'input-error' : ''}
           required
         />
 

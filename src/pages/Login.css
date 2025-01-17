@@ -132,7 +132,7 @@ body {
   font-weight: bold; /* Aplica negrito */
   margin-top: 10px;
   text-align: center;
-  text-shadow: var(--success-shadow, 1px 5px 4px white); /* Sombra padrão */
+  text-shadow: var(--success-shadow, 1px 1px 4px rgb(0, 0, 0)); /* Sombra padrão */
 }
 
 .error-message {
@@ -141,7 +141,7 @@ body {
   font-weight: bold; /* Aplica negrito */
   margin-top: 10px;
   text-align: center;
-  text-shadow: var(--error-shadow, 2px 2px 4px rgb(0, 0, 0)); /* Sombra padrão */
+  text-shadow: var(--error-shadow, 2px 1px 4px rgb(0, 0, 0)); /* Sombra padrão */
 }
 
 /* Responsividade para celulares */

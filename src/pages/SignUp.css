@@ -22,6 +22,20 @@
   font-size: 28px;
   font-weight: 600;
 }
+.signup-container h4 {
+  color: #8b7355; /* Cor do título */
+  margin-bottom: 5px; /* Reduz o espaçamento abaixo do título */
+  font-size: 28px; /* Tamanho da fonte do título */
+  font-weight: 600; /* Peso da fonte do título */
+}
+
+.signup-container h5 {
+  color: #8b7355; /* Cor do subtítulo */
+  margin-top: 0; /* Remove o espaçamento acima do subtítulo */
+  margin-bottom: 20px; /* Espaçamento abaixo do subtítulo */
+  font-size: 18px; /* Tamanho da fonte do subtítulo */
+  font-weight: 500; /* Peso da fonte do subtítulo */
+}
 
 .signup-container input {
   width: 100%;
@@ -38,6 +52,11 @@
 .signup-container input:focus {
   border-color: #8b7355;
   box-shadow: 0 0 8px rgba(139, 115, 85, 0.3);
+}
+
+/* Estilo para campos com erro */
+.signup-container input.input-error {
+  border: 2px solid red;
 }
 
 .signup-container button {
@@ -111,6 +130,7 @@
 .gender-selection input[type="radio"]:checked + .radio-custom::after {
   opacity: 1; /* Mostra o ponto interno quando selecionado */
 }
+
 .success-message {
   color: green;
   font-size: 14px;
@@ -158,6 +178,16 @@
   font-size: 16px;
 }
 
+.input-label {
+  display: block;
+  font-size: 10px; /* Tamanho da fonte */
+  font-weight: 500; /* Peso da fonte (pode ser 'bold' para negrito) */
+  color: #af9574; /* Cor do texto (pode ser alterada conforme necessário) */
+  margin-bottom: 0px; /* Espaçamento abaixo do rótulo */
+  margin-top: 15px; /* Espaçamento acima do rótulo */
+  text-align: left;
+}
+
 /* Responsividade para telas menores */
 @media (max-width: 480px) {
   .gender-selection {
@@ -168,6 +198,7 @@
   .gender-selection label {
     font-size: 14px; /* Reduz o tamanho da fonte para caber melhor */
   }
+
   .signup-container button {
     width: 100%;
     padding: 10px;
@@ -180,6 +211,7 @@
     margin-top: 10px;
     transition: background-color 0.3s ease, transform 0.2s ease;
   }
+
   .signup-container h4 {
     margin-bottom: 8px; /* Reduz o espaçamento no mobile */
   }
@@ -188,6 +220,7 @@
     margin-top: 0; /* Garante que não haja espaçamento extra */
     margin-bottom: 5px; /* Reduz o espaçamento no mobile */
   }
+
   .signup-container input {
     width: 100%;
     padding: 12px;
@@ -199,6 +232,4 @@
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     background-color: #ffffff;
   }
-
- 
 }
