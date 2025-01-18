@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import './SideMenu.css';
 
@@ -11,6 +11,43 @@ function SideMenu({ role, userName, userPhoto, userId }) {
   const [photoURL, setPhotoURL] = useState(userPhoto || '/default-profile.png');
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
+
+  // Função para extrair os nomes das abas do JSX
+  const extractTabNames = () => {
+    const tabNames = [];
+    const menuItems = document.querySelectorAll('.menu-item-text'); // Seleciona os elementos das abas
+    
+    menuItems.forEach((item) => {
+      tabNames.push(item.textContent); // Extrai o texto de cada aba
+    });
+    return tabNames;
+  };
+
+  // Função para enviar os nomes das abas ao Firestore
+  const updateTabsInFirestore = async () => {
+    const tabNames = extractTabNames(); // Extrai os nomes das abas
+    
+
+    try {
+      for (const tabName of tabNames) {
+        // Adiciona cada aba ao Firestore na coleção "tabs"
+        await setDoc(doc(db, "tabs", tabName), { name: tabName });
+        
+      }
+    } catch (error) {
+      console.error("Erro ao adicionar abas ao Firestore:", error.message);
+    }
+  };
+
+  // Executa a função quando o componente é montado
+  useEffect(() => {
+    // Aguarda um pequeno intervalo para garantir que o DOM esteja renderizado
+    const timer = setTimeout(() => {
+      updateTabsInFirestore();
+    }, 500); // 500ms de atraso (ajuste conforme necessário)
+
+    return () => clearTimeout(timer); // Limpa o timer se o componente for desmontado
+  }, [isExpanded]); // Executa sempre que o estado isExpanded mudar
 
   // Busca a foto do perfil do Firestore ao carregar o componente ou quando o userId mudar
   useEffect(() => {
@@ -117,12 +154,12 @@ function SideMenu({ role, userName, userPhoto, userId }) {
       </div>
       {/* Lista de botões do menu */}
       <ul>
-      <li onClick={() => navigate('/Home')}> {/* Navega para a página FerramentasADM */}
-            <img src="/home.png" alt="Home" className="menu-item-icon" />
-            {isExpanded && <span className="menu-item-text">Home</span>}
-          </li>
+        <li onClick={() => navigate('/Home')}>
+          <img src="/home.png" alt="Home" className="menu-item-icon" />
+          {isExpanded && <span className="menu-item-text">Home</span>}
+        </li>
         {(role === 'administrador') && (
-          <li onClick={() => navigate('/ferramentas-adm')}> {/* Navega para a página FerramentasADM */}
+          <li onClick={() => navigate('/ferramentas-adm')}>
             <img src="/ferramenta.png" alt="Ferramentas ADM" className="menu-item-icon" />
             {isExpanded && <span className="menu-item-text">Ferramentas ADM</span>}
           </li>
