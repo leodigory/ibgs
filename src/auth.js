@@ -57,3 +57,17 @@ export const getUserRole = async (uid) => {
     throw error;
   }
 };
+
+// Função para buscar os dados completos do usuário no Firestore
+export const getUserData = async (uid) => {
+  try {
+    const userDoc = await getDoc(doc(db, "users", uid)); // Busca o documento do usuário no Firestore
+    if (userDoc.exists()) {
+      return userDoc.data(); // Retorna todos os dados do usuário
+    }
+    return null; // Retorna null se o documento não existir
+  } catch (error) {
+    console.error("Erro ao buscar os dados do usuário:", error.message);
+    throw error;
+  }
+};

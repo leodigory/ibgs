@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Para redirecionar após o logout
+import { auth } from '../firebase'; // Importa o auth do Firebase
+import { signOut } from 'firebase/auth'; // Importa a função de logout do Firebase
 import './SideMenu.css';
 
 function SideMenu({ role }) {
@@ -10,11 +12,17 @@ function SideMenu({ role }) {
     setIsExpanded(!isExpanded);
   };
 
-  const handleLogout = () => {
-    // Aqui você pode adicionar a lógica de logout, como limpar o token de autenticação.
-    console.log('Usuário deslogado');
-    // Redireciona para a página de login (/login)
-    navigate('/');
+  const handleLogout = async () => {
+    try {
+      // Faz o logout no Firebase
+      await signOut(auth);
+      console.log('Usuário deslogado com sucesso');
+      
+      // Redireciona para a página de login
+      navigate('/');
+    } catch (error) {
+      console.error('Erro ao fazer logout:', error.message);
+    }
   };
 
   return (
