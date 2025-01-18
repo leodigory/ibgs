@@ -28,12 +28,19 @@ function Login() {
       // Autentica o usuário com Firebase
       const user = await signIn(email, password);
 
-      // Busca o papel (role) do usuário no Firestore
+      // Busca os dados do usuário no Firestore
       const userDoc = await getDoc(doc(db, "users", user.uid));
-      const userRole = userDoc.data().role || 'visitante'; // Define o papel padrão como 'visitante'
+      const userData = userDoc.data();
 
-      // Redireciona para a página inicial com base no papel (role) do usuário
-      navigate('/home', { state: { role: userRole } });
+      // Redireciona para a página inicial com base no papel (role) e dados do usuário
+      navigate('/home', { 
+        state: { 
+          role: userData?.role || 'visitante', // Define o papel padrão como 'visitante'
+          userName: userData?.name || '', // Nome do usuário
+          userPhoto: userData?.photoURL || '/default-profile.png', // Foto do usuário (ou padrão)
+          userId: user.uid, // ID do usuário
+        } 
+      });
     } catch (error) {
       setError('Credenciais inválidas!'); // Define a mensagem de erro
     }

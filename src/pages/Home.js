@@ -1,33 +1,46 @@
 import React, { useEffect, useState } from 'react';
-import { auth } from '../firebase'; // Importa o auth do Firebase
-import { getUserRole, getUserData } from '../auth'; // Importa as funções para buscar o role e os dados do usuário
+import { useLocation } from 'react-router-dom';
+import { auth } from '../firebase';
+import { getUserRole, getUserData } from '../auth';
 import SideMenu from '../components/SideMenu';
 import './Home.css';
 
 function Home() {
-  const [role, setRole] = useState('guest'); // Estado para armazenar o role
-  const [userName, setUserName] = useState(''); // Estado para armazenar o nome do usuário
-  const [userPhoto, setUserPhoto] = useState(''); // Estado para armazenar a foto do usuário
+  const [role, setRole] = useState('guest');
+  const [userName, setUserName] = useState('');
+  const [userPhoto, setUserPhoto] = useState('');
+  const [userId, setUserId] = useState(null);
+  const location = useLocation();
 
   useEffect(() => {
-    // Função para buscar o role, nome e foto do usuário logado
     const fetchUserData = async () => {
-      const user = auth.currentUser; // Pega o usuário logado
+      const user = auth.currentUser;
       if (user) {
-        const userRole = await getUserRole(user.uid); // Busca o role do Firestore
-        const userData = await getUserData(user.uid); // Busca os dados do usuário no Firestore
-        setRole(userRole); // Atualiza o estado com o role
-        setUserName(userData.name); // Atualiza o estado com o nome do usuário
-        setUserPhoto(userData.photoURL); // Atualiza o estado com a foto do usuário
+        const userRole = await getUserRole(user.uid);
+        const userData = await getUserData(user.uid);
+        setRole(userRole);
+        setUserName(userData.name);
+        setUserPhoto(userData.photoURL || '/default-profile.png');
+        setUserId(user.uid);
       }
     };
 
-    fetchUserData(); // Chama a função ao carregar o componente
-  }, []);
+    // Se houver dados no estado de navegação, use-os
+    if (location.state) {
+      setRole(location.state.role);
+      setUserName(location.state.userName);
+      setUserPhoto(location.state.userPhoto || '/default-profile.png');
+      setUserId(location.state.userId);
+    } else {
+      // Caso contrário, busque os dados do Firestore
+      fetchUserData();
+    }
+  }, [location.state]);
 
   return (
     <div className="home-container">
-      <SideMenu role={role} userName={userName} userPhoto={userPhoto} /> {/* Passa as informações para o SideMenu */}
+      {/* Passa as informações para o SideMenu */}
+      <SideMenu role={role} userName={userName} userPhoto={userPhoto} userId={userId} />
       <h1>Bem-vindo à página inicial, <strong>{userName}</strong>!</h1>
       <p>Você está logado como: <strong>{role}</strong></p>
       {role === 'admin' && <p>Acesso total ao sistema.</p>}

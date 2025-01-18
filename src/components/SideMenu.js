@@ -1,12 +1,35 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Para redirecionar após o logout
-import { auth } from '../firebase'; // Importa o auth do Firebase
-import { signOut } from 'firebase/auth'; // Importa a função de logout do Firebase
+import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { auth } from '../firebase';
+import { signOut } from 'firebase/auth';
+import { doc, getDoc, updateDoc } from 'firebase/firestore'; // Adicione getDoc
+import { db } from '../firebase';
 import './SideMenu.css';
 
-function SideMenu({ role, userName, userPhoto }) {
+function SideMenu({ role, userName, userPhoto, userId }) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const navigate = useNavigate(); // Hook para redirecionamento
+  const [photoURL, setPhotoURL] = useState(userPhoto || '/default-profile.png'); // Estado para a URL da foto
+  const fileInputRef = useRef(null); // Referência para o input de arquivo
+  const navigate = useNavigate();
+
+  // Busca a foto do perfil do Firestore ao carregar o componente ou quando o userId mudar
+  useEffect(() => {
+    const fetchPhotoURL = async () => {
+      if (userId) {
+        try {
+          const userDoc = await getDoc(doc(db, 'users', userId));
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            setPhotoURL(userData.photoURL || '/default-profile.png'); // Atualiza o estado com a foto do Firestore
+          }
+        } catch (error) {
+          console.error('Erro ao buscar a foto do perfil:', error);
+        }
+      }
+    };
+
+    fetchPhotoURL();
+  }, [userId]); // Executa sempre que o userId mudar
 
   const toggleMenu = () => {
     setIsExpanded(!isExpanded);
@@ -14,14 +37,53 @@ function SideMenu({ role, userName, userPhoto }) {
 
   const handleLogout = async () => {
     try {
-      // Faz o logout no Firebase
       await signOut(auth);
       console.log('Usuário deslogado com sucesso');
-      
-      // Redireciona para a página de login
       navigate('/');
     } catch (error) {
       console.error('Erro ao fazer logout:', error.message);
+    }
+  };
+
+  // Função para converter a imagem em base64
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
+  // Função para lidar com o upload da foto
+  const handlePhotoUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file || !userId) return;
+
+    // Verifica o tamanho da imagem (1 MB = 1 * 1024 * 1024 bytes)
+    if (file.size > 1 * 1024 * 1024) {
+      alert('A imagem deve ter no máximo 1 MB.');
+      return;
+    }
+
+    try {
+      // Converte a imagem para base64
+      const base64 = await convertToBase64(file);
+
+      // Atualiza a URL da foto no Firestore
+      const userDoc = doc(db, 'users', userId);
+      await updateDoc(userDoc, { photoURL: base64 });
+
+      // Atualiza o estado local com a nova URL da foto
+      setPhotoURL(base64);
+      console.log('Foto atualizada com sucesso:');
+
+      // Limpa o valor do input de arquivo para permitir a seleção da mesma imagem novamente
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    } catch (error) {
+      console.error('Erro ao fazer upload da foto:', error);
     }
   };
 
@@ -35,8 +97,15 @@ function SideMenu({ role, userName, userPhoto }) {
       </div>
       {/* Perfil do usuário (exibido apenas quando o menu está expandido) */}
       <div className="user-profile">
-        <div className="profile-picture">
-          <img src={userPhoto || '/default-profile.png'} alt="Profile" />
+        <div className="profile-picture" onClick={() => fileInputRef.current.click()}>
+          <img src={photoURL} alt="Profile" onError={(e) => { e.target.src = '/default-profile.png'; }} />
+          <input
+            type="file"
+            ref={fileInputRef}
+            style={{ display: 'none' }}
+            onChange={handlePhotoUpload}
+            accept="image/*"
+          />
         </div>
         <div className="profile-info">
           <h3>{userName}</h3>
@@ -73,10 +142,10 @@ function SideMenu({ role, userName, userPhoto }) {
       </ul>
       {/* Círculo pequeno com a foto do perfil e texto abaixo (quando o menu está retraído) */}
       <div className="mini-profile-container">
-        <div className="mini-profile">
-          <img src={userPhoto || '/default-profile.png'} alt="Mini Profile" />
+        <div className="mini-profile" onClick={() => fileInputRef.current.click()}>
+          <img src={photoURL} alt="Mini Profile" onError={(e) => { e.target.src = '/default-profile.png'; }} />
         </div>
-        <p className="mini-profile-name">{firstName}</p> {/* Exibe o primeiro nome */}
+        <p className="mini-profile-name">{firstName}</p>
       </div>
       {/* Botão de Logout */}
       <div className="logout-container">
