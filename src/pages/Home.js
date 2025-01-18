@@ -7,9 +7,10 @@ import './Home.css';
 function Home() {
   const [role, setRole] = useState('guest'); // Estado para armazenar o role
   const [userName, setUserName] = useState(''); // Estado para armazenar o nome do usuário
+  const [userPhoto, setUserPhoto] = useState(''); // Estado para armazenar a foto do usuário
 
   useEffect(() => {
-    // Função para buscar o role e o nome do usuário logado
+    // Função para buscar o role, nome e foto do usuário logado
     const fetchUserData = async () => {
       const user = auth.currentUser; // Pega o usuário logado
       if (user) {
@@ -17,6 +18,7 @@ function Home() {
         const userData = await getUserData(user.uid); // Busca os dados do usuário no Firestore
         setRole(userRole); // Atualiza o estado com o role
         setUserName(userData.name); // Atualiza o estado com o nome do usuário
+        setUserPhoto(userData.photoURL); // Atualiza o estado com a foto do usuário
       }
     };
 
@@ -25,14 +27,14 @@ function Home() {
 
   return (
     <div className="home-container">
-      <SideMenu role={role} /> {/* Passa o role para o SideMenu */}
+      <SideMenu role={role} userName={userName} userPhoto={userPhoto} /> {/* Passa as informações para o SideMenu */}
       <h1>Bem-vindo à página inicial, <strong>{userName}</strong>!</h1>
       <p>Você está logado como: <strong>{role}</strong></p>
       {role === 'admin' && <p>Acesso total ao sistema.</p>}
       {role === 'pastor' && <p>Acesso total ao sistema.</p>}
       {role === 'financeiro' && <p>Acesso ao setor financeiro.</p>}
       {role === 'lideranca' && <p>Acesso às ferramentas de liderança.</p>}
-      {role === 'membro' && <p>Acesso mebro liberado.</p>}
+      {role === 'membro' && <p>Acesso membro liberado.</p>}
       {role === 'visitante' && <p>Acesso limitado.</p>}
     </div>
   );
