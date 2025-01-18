@@ -4,7 +4,7 @@
   top: 0;
   left: 0;
   height: 100%;
-  background-color: #8b7355; /* Bege escuro */
+  background-color: rgba(139, 115, 85, 0.8); /* Bege escuro com 80% de opacidade */
   color: white;
   width: 60px;
   transition: width 0.3s;
@@ -38,17 +38,34 @@
 .side-menu ul li {
   padding: 15px 20px;
   cursor: pointer;
+  display: flex;
+  align-items: center; /* Alinha ícone e texto verticalmente */
 }
 
 .side-menu ul li:hover {
-  background-color: #6b5a45; /* Bege mais escuro */
+  background-color: rgba(107, 90, 69, 0.8); /* Bege mais escuro com 80% de opacidade */
+}
+
+/* Estilo dos ícones nos itens do menu */
+.side-menu ul li .menu-item-icon {
+  width: 24px; /* Tamanho do ícone */
+  height: 24px; /* Tamanho do ícone */
+  margin-right: 10px; /* Espaço entre o ícone e o texto */
+}
+
+.side-menu ul li .menu-item-text {
+  display: none; /* Oculta o texto por padrão */
+}
+
+.side-menu.expanded ul li .menu-item-text {
+  display: inline; /* Mostra o texto quando o menu está expandido */
 }
 
 /* Container do botão de Logout */
 .logout-container {
   padding: 20px;
   text-align: center; /* Centraliza o botão */
-  border-top: 1px solid #6b5a45; /* Linha separadora */
+  border-top: 1px solid rgba(107, 90, 69, 0.8); /* Linha separadora com transparência */
   flex-shrink: 0; /* Impede que o container encolha */
 }
 
@@ -57,18 +74,29 @@
   background-color: transparent; /* Fundo transparente */
   color: white; /* Cor do texto */
   border: none; /* Remove a borda */
-  margin-left: -15px;
   padding: 0; /* Remove o padding interno */
   font-size: 16px; /* Tamanho da fonte para o texto */
   cursor: pointer; /* Cursor de ponteiro */
   width: 100%; /* Ocupa toda a largura do container */
   transition: font-size 0.3s ease; /* Transição suave */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centraliza o conteúdo */
 }
 
 /* Estilo do ícone de Logout */
 .logout-icon {
-  width: 34px; /* Tamanho do ícone */
-  height: 34px; /* Tamanho do ícone */
+  width: 24px; /* Tamanho do ícone */
+  height: 24px; /* Tamanho do ícone */
+}
+
+.logout-text {
+  display: none; /* Oculta o texto por padrão */
+  margin-left: 10px; /* Espaço entre o ícone e o texto */
+}
+
+.side-menu.expanded .logout-text {
+  display: inline; /* Mostra o texto quando o menu está expandido */
 }
 
 .logout-button:hover {
@@ -98,12 +126,8 @@
     padding: 15px;
   }
 
-  .logout-button {
-    font-size: 14px; /* Tamanho da fonte menor para celulares */
-  }
-
   .logout-icon {
-    width: 20px; /* Tamanho do ícone menor para celulares */
-    height: 20px; /* Tamanho do ícone menor para celulares */
+    width: 25px; /* Tamanho do ícone menor para celulares */
+    height: 25px; /* Tamanho do ícone menor para celulares */
   }
 }

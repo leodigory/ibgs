@@ -31,16 +31,34 @@ function SideMenu({ role }) {
         ☰
       </div>
       <ul>
-        <li>Culto</li>
-        <li>Oferta</li>
-        <li>Calendário</li>
-        {role === 'visitante' && <li>Quero ser membro</li>} {/* Exibe apenas para visitantes */}
-        <li>Sobre</li>
+        <li>
+          <img src="/culto.png" alt="Culto" className="menu-item-icon" /> {/* Ícone */}
+          {isExpanded && <span className="menu-item-text">Culto</span>} {/* Texto */}
+        </li>
+        <li>
+          <img src="/oferta.png" alt="Oferta" className="menu-item-icon" /> {/* Ícone */}
+          {isExpanded && <span className="menu-item-text">Oferta</span>} {/* Texto */}
+        </li>
+        <li>
+          <img src="/calendario.png" alt="Calendário" className="menu-item-icon" /> {/* Ícone */}
+          {isExpanded && <span className="menu-item-text">Calendário</span>} {/* Texto */}
+        </li>
+        {role === 'visitante' && (
+          <li>
+            <img src="/membro.png" alt="Quero ser membro" className="menu-item-icon" /> {/* Ícone */}
+            {isExpanded && <span className="menu-item-text">Quero ser membro</span>} {/* Texto */}
+          </li>
+        )}
+        <li>
+          <img src="/sobre.png" alt="Sobre" className="menu-item-icon" /> {/* Ícone */}
+          {isExpanded && <span className="menu-item-text">Sobre</span>} {/* Texto */}
+        </li>
       </ul>
       {/* Botão de Logout */}
       <div className="logout-container">
         <button className="logout-button" onClick={handleLogout}>
-          {isExpanded ? 'Logout' : <img src="/log-out.png" alt="Logout" className="logout-icon" />} {/* Mostra texto ou ícone */}
+          <img src="/log-out.png" alt="Logout" className="logout-icon" /> {/* Ícone */}
+          {isExpanded && <span className="logout-text">Logout</span>} {/* Texto */}
         </button>
       </div>
     </div>
