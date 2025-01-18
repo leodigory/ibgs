@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Home from './pages/Home';
+import FerramentasADM from './pages/FerramentasADM'; // Importe a página FerramentasADM
 import PrivateRoute from './components/PrivateRoute'; // Importa o PrivateRoute
 
 function App() {
@@ -21,6 +22,16 @@ function App() {
           element={
             <PrivateRoute>
               <Home />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Rota Privada: Ferramentas ADM */}
+        <Route
+          path="/ferramentas-adm"
+          element={
+            <PrivateRoute>
+              <FerramentasADM />
             </PrivateRoute>
           }
         />

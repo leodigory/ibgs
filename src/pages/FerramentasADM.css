@@ -1,0 +1,113 @@
+/* Estilos gerais da página */
+.ferramentas-adm-container {
+    display: flex;
+    min-height: 100vh;
+    min-width: 1500px;
+    background-color: #f0f0f0; /* Fundo cinza claro */
+    margin: 0; /* Remove margens padrão */
+    width: 100%; /* Ocupa toda a largura da tela */
+    overflow-x: hidden; /* Impede rolagem horizontal */
+    overflow-y: auto; /* Permite rolagem vertical */
+    margin-top: 10px; /* Margem superior personalizável */
+    margin-left: 60px; /* Largura do SideMenu */
+    margin-right: 0px; /* Margem direita personalizável */
+}
+
+/* Estilos para o conteúdo da página */
+.ferramentas-adm-content {
+    flex: 1; /* Ocupa todo o espaço restante */
+    padding: 20px; /* Espaçamento interno */
+    background-color: white; /* Container branco */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    margin-left: 0px; /* Remove margem esquerda */
+    margin-right: 0px; /* Remove margem direita */
+    margin-top: 20px; /* Margem superior personalizável */
+    margin-bottom: 20px; /* Margem inferior personalizável */
+    width: 100%; /* Ocupa toda a largura da tela */
+    max-width: none; /* Remove a limitação de largura máxima */
+    overflow-y: auto; /* Permite rolagem vertical */
+}
+
+/* Estilos para o título */
+.ferramentas-adm-content h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Estilos para a lista de grupos de botões */
+.button-groups {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Espaçamento entre os grupos */
+    justify-content: flex-start; /* Alinha os grupos à esquerda */
+}
+
+/* Estilos para cada grupo de botões */
+.button-group {
+    flex: 1 1 calc(33.33% - 20px); /* Ocupa um terço da largura no PC */
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    min-width: 250px; /* Largura mínima para cada grupo */
+}
+
+.button-group h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.button-group button {
+    background-color: #a18055;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 10px;
+    margin-bottom: 10px; /* Espaçamento entre os botões */
+}
+
+.button-group button:hover {
+    background-color: #634622;
+}
+
+/* Estilos responsivos para telas menores (celular) */
+@media (max-width: 768px) {
+    .ferramentas-adm-container {
+        margin-left: 45px; /* Remove a margem esquerda no celular */
+        margin-right: -15px; /* Remove a margem direita no celular */
+        min-width: 100%; /* Garante que o container ocupe toda a largura da tela */
+    }
+
+    .ferramentas-adm-content {
+        margin-left: 10px; /* Margem esquerda reduzida no celular */
+        margin-right: 10px; /* Margem direita reduzida no celular */
+        width: calc(100% - 50px); /* Ocupa o espaço restante após as margens */
+        padding: 10px; /* Reduz o padding para melhor aproveitamento do espaço */
+    }
+
+    .button-groups {
+        flex-direction: column; /* Coloca os grupos um acima do outro */
+        gap: 10px; /* Reduz o espaçamento entre os grupos */
+    }
+
+    .button-group {
+        flex: 1 1 100%; /* Ocupa 100% da largura no celular */
+        min-width: auto; /* Remove a largura mínima para melhor ajuste */
+        padding: 15px; /* Ajusta o padding para melhor aproveitamento do espaço */
+    }
+
+    .button-group h2 {
+        font-size: 16px; /* Reduz o tamanho da fonte para melhor ajuste */
+    }
+
+    .button-group button {
+        width: 100%; /* Faz os botões ocuparem toda a largura do grupo */
+        margin-right: 0; /* Remove a margem direita dos botões */
+    }
+}

@@ -2,14 +2,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
-import { doc, getDoc, updateDoc } from 'firebase/firestore'; // Adicione getDoc
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import './SideMenu.css';
 
 function SideMenu({ role, userName, userPhoto, userId }) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [photoURL, setPhotoURL] = useState(userPhoto || '/default-profile.png'); // Estado para a URL da foto
-  const fileInputRef = useRef(null); // Referência para o input de arquivo
+  const [photoURL, setPhotoURL] = useState(userPhoto || '/default-profile.png');
+  const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
   // Busca a foto do perfil do Firestore ao carregar o componente ou quando o userId mudar
@@ -20,7 +20,7 @@ function SideMenu({ role, userName, userPhoto, userId }) {
           const userDoc = await getDoc(doc(db, 'users', userId));
           if (userDoc.exists()) {
             const userData = userDoc.data();
-            setPhotoURL(userData.photoURL || '/default-profile.png'); // Atualiza o estado com a foto do Firestore
+            setPhotoURL(userData.photoURL || '/default-profile.png');
           }
         } catch (error) {
           console.error('Erro ao buscar a foto do perfil:', error);
@@ -29,7 +29,7 @@ function SideMenu({ role, userName, userPhoto, userId }) {
     };
 
     fetchPhotoURL();
-  }, [userId]); // Executa sempre que o userId mudar
+  }, [userId]);
 
   const toggleMenu = () => {
     setIsExpanded(!isExpanded);
@@ -117,19 +117,29 @@ function SideMenu({ role, userName, userPhoto, userId }) {
       </div>
       {/* Lista de botões do menu */}
       <ul>
+      <li onClick={() => navigate('/Home')}> {/* Navega para a página FerramentasADM */}
+            <img src="/home.png" alt="Home" className="menu-item-icon" />
+            {isExpanded && <span className="menu-item-text">Home</span>}
+          </li>
+        {(role === 'administrador') && (
+          <li onClick={() => navigate('/ferramentas-adm')}> {/* Navega para a página FerramentasADM */}
+            <img src="/ferramenta.png" alt="Ferramentas ADM" className="menu-item-icon" />
+            {isExpanded && <span className="menu-item-text">Ferramentas ADM</span>}
+          </li>
+        )}
         <li>
           <img src="/culto.png" alt="Culto" className="menu-item-icon" />
           {isExpanded && <span className="menu-item-text">Culto</span>}
         </li>
         <li>
-          <img src="/oferta.png" alt="Oferta" className="menu-item-icon" />
-          {isExpanded && <span className="menu-item-text">Oferta</span>}
-        </li>
-        <li>
           <img src="/calendario.png" alt="Calendário" className="menu-item-icon" />
           {isExpanded && <span className="menu-item-text">Calendário</span>}
         </li>
-        {role === 'visitante' && (
+        <li>
+          <img src="/oferta.png" alt="Oferta" className="menu-item-icon" />
+          {isExpanded && <span className="menu-item-text">Oferta</span>}
+        </li>
+        {(role === 'visitante' || role === 'administrador') && (
           <li>
             <img src="/membro.png" alt="Quero ser membro" className="menu-item-icon" />
             {isExpanded && <span className="menu-item-text">Quero ser membro</span>}
