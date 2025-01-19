@@ -1,24 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase'; // Importe o Firestore
 import './Classes.css'; // Estilos do componente
 
 function Classes({ onClose }) {
   const [classes, setClasses] = useState([]); // Lista de classes
   const [newClassName, setNewClassName] = useState(''); // Nome da nova classe
+  const [tabs, setTabs] = useState([]); // Lista de abas disponíveis
+  const [selectedTabs, setSelectedTabs] = useState({}); // Abas selecionadas para cada classe
 
-  // Busca as classes do Firestore ao carregar o componente
+  // Busca as classes e as abas do Firestore ao carregar o componente
   useEffect(() => {
-    const fetchClasses = async () => {
-      const querySnapshot = await getDocs(collection(db, 'classes'));
+    const fetchData = async () => {
+      // Busca as classes
+      const classesSnapshot = await getDocs(collection(db, 'classes'));
       const classesList = [];
-      querySnapshot.forEach((doc) => {
-        classesList.push({ id: doc.id, name: doc.data().name });
+      classesSnapshot.forEach((doc) => {
+        classesList.push({ id: doc.id, name: doc.data().name, roles: doc.data().roles || [] });
       });
       setClasses(classesList);
+
+      // Busca as abas
+      const tabsSnapshot = await getDocs(collection(db, 'tabs'));
+      const tabsList = [];
+      tabsSnapshot.forEach((doc) => {
+        tabsList.push(doc.id); // Assume que o nome da aba é o ID do documento
+      });
+      setTabs(tabsList);
     };
 
-    fetchClasses();
+    fetchData();
   }, []);
 
   // Função para adicionar uma nova classe
@@ -29,10 +40,11 @@ function Classes({ onClose }) {
       // Adiciona a nova classe ao Firestore
       const newClassRef = await addDoc(collection(db, 'classes'), {
         name: newClassName,
+        roles: [], // Inicializa sem abas selecionadas
       });
 
       // Atualiza a lista de classes localmente
-      setClasses([...classes, { id: newClassRef.id, name: newClassName }]);
+      setClasses([...classes, { id: newClassRef.id, name: newClassName, roles: [] }]);
       setNewClassName(''); // Limpa o campo de texto
     } catch (error) {
       console.error('Erro ao adicionar classe:', error);
@@ -46,6 +58,31 @@ function Classes({ onClose }) {
       setClasses(classes.filter((cls) => cls.id !== id)); // Atualiza a lista local
     } catch (error) {
       console.error('Erro ao excluir classe:', error);
+    }
+  };
+
+  // Função para atualizar as abas selecionadas de uma classe
+  const handleTabSelection = async (classId, tabName) => {
+    try {
+      const classRef = doc(db, 'classes', classId);
+      const classData = classes.find((cls) => cls.id === classId);
+
+      // Verifica se a aba já está selecionada
+      const updatedRoles = classData.roles.includes(tabName)
+        ? classData.roles.filter((role) => role !== tabName) // Remove a aba
+        : [...classData.roles, tabName]; // Adiciona a aba
+
+      // Atualiza o Firestore
+      await updateDoc(classRef, { roles: updatedRoles });
+
+      // Atualiza a lista de classes localmente
+      setClasses(
+        classes.map((cls) =>
+          cls.id === classId ? { ...cls, roles: updatedRoles } : cls
+        )
+      );
+    } catch (error) {
+      console.error('Erro ao atualizar abas da classe:', error);
     }
   };
 
@@ -75,12 +112,24 @@ function Classes({ onClose }) {
           <button onClick={handleAddClass}>+</button>
         </div>
 
-        {/* Lista de classes */}
+        {/* Lista de classes e abas */}
         <div className="classes-list">
           {classes.map((cls) => (
             <div key={cls.id} className="class-item">
-              <span>{cls.name}</span>
-              <button onClick={() => handleDeleteClass(cls.id)}>X</button>
+              <h3>{cls.name}</h3>
+              <div className="tabs-list">
+                {tabs.map((tab) => (
+                  <label key={tab} className="tab-checkbox">
+                    <input
+                      type="checkbox"
+                      checked={cls.roles.includes(tab)}
+                      onChange={() => handleTabSelection(cls.id, tab)}
+                    />
+                    {tab}
+                  </label>
+                ))}
+              </div>
+              <button onClick={() => handleDeleteClass(cls.id)}>Excluir</button>
             </div>
           ))}
         </div>

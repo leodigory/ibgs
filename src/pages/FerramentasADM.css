@@ -1,16 +1,18 @@
 /* Estilos gerais da página */
 .ferramentas-adm-container {
     display: flex;
-    min-height: 100vh;
-    min-width: 1500px;
+    min-height: 100vh; /* Altura mínima da tela inteira */
+    min-width: 1450px; /* Largura mínima de 1500px */
     background-color: #f0f0f0; /* Fundo cinza claro */
     margin: 0; /* Remove margens padrão */
     width: 100%; /* Ocupa toda a largura da tela */
-    overflow-x: hidden; /* Impede rolagem horizontal */
+    overflow-x: auto; /* Permite rolagem horizontal se necessário */
     overflow-y: auto; /* Permite rolagem vertical */
     margin-top: 10px; /* Margem superior personalizável */
-    margin-left: 60px; /* Largura do SideMenu */
-    margin-right: 0px; /* Margem direita personalizável */
+    margin-left: 120px; /* Largura do SideMenu */
+    margin-right: 100px; /* Margem direita personalizável */
+    box-sizing: border-box; /* Garante que padding e bordas não aumentem o tamanho */
+    transition: all 0.3s ease; /* Transição suave para todas as propriedades */
 }
 
 /* Estilos para o conteúdo da página */
@@ -20,13 +22,12 @@
     background-color: white; /* Container branco */
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    margin-left: 0px; /* Remove margem esquerda */
-    margin-right: 0px; /* Remove margem direita */
-    margin-top: 20px; /* Margem superior personalizável */
-    margin-bottom: 20px; /* Margem inferior personalizável */
-    width: 100%; /* Ocupa toda a largura da tela */
+    margin: 20px 0; /* Margens superior e inferior */
+    width: calc(100% - 140px); /* Ajusta a largura considerando as margens */
     max-width: none; /* Remove a limitação de largura máxima */
     overflow-y: auto; /* Permite rolagem vertical */
+    box-sizing: border-box; /* Garante que padding e bordas não aumentem o tamanho */
+    transition: all 0.3s ease; /* Transição suave para todas as propriedades */
 }
 
 /* Estilos para o título */
@@ -42,6 +43,7 @@
     flex-wrap: wrap;
     gap: 20px; /* Espaçamento entre os grupos */
     justify-content: flex-start; /* Alinha os grupos à esquerda */
+    transition: all 0.3s ease; /* Transição suave para todas as propriedades */
 }
 
 /* Estilos para cada grupo de botões */
@@ -52,6 +54,8 @@
     border-radius: 8px;
     background-color: #f9f9f9;
     min-width: 250px; /* Largura mínima para cada grupo */
+    box-sizing: border-box; /* Garante que padding e bordas não aumentem o tamanho */
+    transition: all 0.3s ease; /* Transição suave para todas as propriedades */
 }
 
 .button-group h2 {
@@ -70,27 +74,34 @@
     font-size: 14px;
     margin-right: 10px;
     margin-bottom: 10px; /* Espaçamento entre os botões */
+    width: 100%; /* Faz os botões ocuparem toda a largura do grupo */
+    box-sizing: border-box; /* Garante que padding e bordas não aumentem o tamanho */
+    transition: all 0.3s ease; /* Transição suave para todas as propriedades */
 }
 
 .button-group button:hover {
     background-color: #634622;
 }
 
-/* Estilos responsivos para telas menores (celular) */
-@media (max-width: 768px) {
+/* Estilos responsivos para telas menores */
+@media (max-width: 1500px) {
     .ferramentas-adm-container {
-        margin-left: 45px; /* Remove a margem esquerda no celular */
-        margin-right: -15px; /* Remove a margem direita no celular */
-        min-width: 100%; /* Garante que o container ocupe toda a largura da tela */
+        min-width: 100%; /* Remove a largura mínima em telas menores que 1500px */
+        margin-left: 25px; /* Reduz a margem esquerda */
+        margin-right: 10px; /* Reduz a margem direita */
     }
 
     .ferramentas-adm-content {
-        margin-left: 10px; /* Margem esquerda reduzida no celular */
-        margin-right: 10px; /* Margem direita reduzida no celular */
-        width: calc(100% - 50px); /* Ocupa o espaço restante após as margens */
+        width: calc(100% - 20px); /* Ajusta a largura considerando as margens reduzidas */
         padding: 10px; /* Reduz o padding para melhor aproveitamento do espaço */
     }
 
+    .button-group {
+        flex: 1 1 calc(50% - 20px); /* Ocupa metade da largura em telas menores */
+    }
+}
+
+@media (max-width: 768px) {
     .button-groups {
         flex-direction: column; /* Coloca os grupos um acima do outro */
         gap: 10px; /* Reduz o espaçamento entre os grupos */

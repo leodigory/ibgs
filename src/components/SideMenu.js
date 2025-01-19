@@ -2,52 +2,55 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
-import { doc, getDoc, updateDoc, setDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import './SideMenu.css';
 
 function SideMenu({ role, userName, userPhoto, userId }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [photoURL, setPhotoURL] = useState(userPhoto || '/default-profile.png');
+  const [allowedTabs, setAllowedTabs] = useState([]); // Abas permitidas para o usuário
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
-  // Função para extrair os nomes das abas do JSX
-  const extractTabNames = () => {
-    const tabNames = [];
-    const menuItems = document.querySelectorAll('.menu-item-text'); // Seleciona os elementos das abas
-    
-    menuItems.forEach((item) => {
-      tabNames.push(item.textContent); // Extrai o texto de cada aba
-    });
-    return tabNames;
-  };
-
-  // Função para enviar os nomes das abas ao Firestore
-  const updateTabsInFirestore = async () => {
-    const tabNames = extractTabNames(); // Extrai os nomes das abas
-    
-
-    try {
-      for (const tabName of tabNames) {
-        // Adiciona cada aba ao Firestore na coleção "tabs"
-        await setDoc(doc(db, "tabs", tabName), { name: tabName });
-        
-      }
-    } catch (error) {
-      console.error("Erro ao adicionar abas ao Firestore:", error.message);
-    }
-  };
-
-  // Executa a função quando o componente é montado
+  // Busca as abas permitidas para o role do usuário
   useEffect(() => {
-    // Aguarda um pequeno intervalo para garantir que o DOM esteja renderizado
-    const timer = setTimeout(() => {
-      updateTabsInFirestore();
-    }, 500); // 500ms de atraso (ajuste conforme necessário)
+    const fetchAllowedTabs = async () => {
+      // Verifica se o role é válido
+      if (!role) {
+        setAllowedTabs([]); // Define um array vazio se o role não estiver definido
+        return;
+      }
 
-    return () => clearTimeout(timer); // Limpa o timer se o componente for desmontado
-  }, [isExpanded]); // Executa sempre que o estado isExpanded mudar
+      try {
+        // Busca todos os documentos da coleção 'classes'
+        const querySnapshot = await getDocs(collection(db, 'classes'));
+        let found = false;
+
+        querySnapshot.forEach((doc) => {
+          const classData = doc.data();
+
+          // Verifica se o campo 'name' ou 'role' corresponde ao role do usuário
+          if (classData.name === role || classData.role === role) {
+            if (classData.roles && Array.isArray(classData.roles)) {
+              setAllowedTabs(classData.roles); // Define as abas permitidas
+              found = true;
+            }
+          }
+        });
+
+        // Se não encontrou a classe, define um array vazio (não é um erro)
+        if (!found) {
+          setAllowedTabs([]);
+        }
+      } catch (error) {
+        console.error('Erro ao buscar abas permitidas:', error);
+        setAllowedTabs([]); // Define um array vazio em caso de erro
+      }
+    };
+
+    fetchAllowedTabs();
+  }, [role]);
 
   // Busca a foto do perfil do Firestore ao carregar o componente ou quando o userId mudar
   useEffect(() => {
@@ -75,7 +78,6 @@ function SideMenu({ role, userName, userPhoto, userId }) {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      console.log('Usuário deslogado com sucesso');
       navigate('/');
     } catch (error) {
       console.error('Erro ao fazer logout:', error.message);
@@ -113,7 +115,6 @@ function SideMenu({ role, userName, userPhoto, userId }) {
 
       // Atualiza o estado local com a nova URL da foto
       setPhotoURL(base64);
-      console.log('Foto atualizada com sucesso:');
 
       // Limpa o valor do input de arquivo para permitir a seleção da mesma imagem novamente
       if (fileInputRef.current) {
@@ -154,38 +155,48 @@ function SideMenu({ role, userName, userPhoto, userId }) {
       </div>
       {/* Lista de botões do menu */}
       <ul>
-        <li onClick={() => navigate('/Home')}>
-          <img src="/home.png" alt="Home" className="menu-item-icon" />
-          {isExpanded && <span className="menu-item-text">Home</span>}
-        </li>
-        {(role === 'administrador') && (
+        {allowedTabs.includes('Home') && (
+          <li onClick={() => navigate('/Home')}>
+            <img src="/home.png" alt="Home" className="menu-item-icon" />
+            {isExpanded && <span className="menu-item-text">Home</span>}
+          </li>
+        )}
+        {allowedTabs.includes('Ferramentas ADM') && (
           <li onClick={() => navigate('/ferramentas-adm')}>
             <img src="/ferramenta.png" alt="Ferramentas ADM" className="menu-item-icon" />
             {isExpanded && <span className="menu-item-text">Ferramentas ADM</span>}
           </li>
         )}
-        <li>
-          <img src="/culto.png" alt="Culto" className="menu-item-icon" />
-          {isExpanded && <span className="menu-item-text">Culto</span>}
-        </li>
-        <li>
-          <img src="/calendario.png" alt="Calendário" className="menu-item-icon" />
-          {isExpanded && <span className="menu-item-text">Calendário</span>}
-        </li>
-        <li>
-          <img src="/oferta.png" alt="Oferta" className="menu-item-icon" />
-          {isExpanded && <span className="menu-item-text">Oferta</span>}
-        </li>
-        {(role === 'visitante' || role === 'administrador') && (
-          <li>
+        {allowedTabs.includes('Culto') && (
+          <li onClick={() => navigate('/culto')}>
+            <img src="/culto.png" alt="Culto" className="menu-item-icon" />
+            {isExpanded && <span className="menu-item-text">Culto</span>}
+          </li>
+        )}
+        {allowedTabs.includes('Calendário') && (
+          <li onClick={() => navigate('/calendario')}>
+            <img src="/calendario.png" alt="Calendário" className="menu-item-icon" />
+            {isExpanded && <span className="menu-item-text">Calendário</span>}
+          </li>
+        )}
+        {allowedTabs.includes('Oferta') && (
+          <li onClick={() => navigate('/oferta')}>
+            <img src="/oferta.png" alt="Oferta" className="menu-item-icon" />
+            {isExpanded && <span className="menu-item-text">Oferta</span>}
+          </li>
+        )}
+        {allowedTabs.includes('Quero ser membro') && (
+          <li onClick={() => navigate('/membro')}>
             <img src="/membro.png" alt="Quero ser membro" className="menu-item-icon" />
             {isExpanded && <span className="menu-item-text">Quero ser membro</span>}
           </li>
         )}
-        <li>
-          <img src="/sobre.png" alt="Sobre" className="menu-item-icon" />
-          {isExpanded && <span className="menu-item-text">Sobre</span>}
-        </li>
+        {allowedTabs.includes('Sobre') && (
+          <li onClick={() => navigate('/sobre')}>
+            <img src="/sobre.png" alt="Sobre" className="menu-item-icon" />
+            {isExpanded && <span className="menu-item-text">Sobre</span>}
+          </li>
+        )}
       </ul>
       {/* Círculo pequeno com a foto do perfil e texto abaixo (quando o menu está retraído) */}
       <div className="mini-profile-container">
