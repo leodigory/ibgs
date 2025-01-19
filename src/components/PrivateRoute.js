@@ -7,18 +7,25 @@ function PrivateRoute({ children }) {
   const [isLoading, setIsLoading] = useState(true); // Estado para controlar o carregamento
 
   useEffect(() => {
+    let isMounted = true; // Flag para verificar se o componente está montado
+
     // Verifica se o usuário está autenticado
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setIsAuthenticated(true); // Usuário autenticado
-      } else {
-        setIsAuthenticated(false); // Usuário não autenticado
+      if (isMounted) {
+        if (user) {
+          setIsAuthenticated(true); // Usuário autenticado
+        } else {
+          setIsAuthenticated(false); // Usuário não autenticado
+        }
+        setIsLoading(false); // Finaliza o carregamento
       }
-      setIsLoading(false); // Finaliza o carregamento
     });
 
     // Limpa o listener ao desmontar o componente
-    return () => unsubscribe();
+    return () => {
+      isMounted = false; // Marca o componente como desmontado
+      unsubscribe(); // Remove o listener
+    };
   }, []);
 
   // Se estiver carregando, exibe uma mensagem ou um spinner
