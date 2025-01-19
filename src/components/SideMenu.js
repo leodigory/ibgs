@@ -1,9 +1,12 @@
+// components/SideMenu.js
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
-import { collection, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
+import { fetchAllowedTabs } from '../services/roleService'; // Serviço para buscar abas permitidas
+import { convertToBase64, uploadPhoto } from '../services/imageService'; // Serviço para manipulação de imagens
 import './SideMenu.css';
 
 function SideMenu({ role, userName, userPhoto, userId }) {
@@ -15,41 +18,12 @@ function SideMenu({ role, userName, userPhoto, userId }) {
 
   // Busca as abas permitidas para o role do usuário
   useEffect(() => {
-    const fetchAllowedTabs = async () => {
-      // Verifica se o role é válido
-      if (!role) {
-        setAllowedTabs([]); // Define um array vazio se o role não estiver definido
-        return;
-      }
-
-      try {
-        // Busca todos os documentos da coleção 'classes'
-        const querySnapshot = await getDocs(collection(db, 'classes'));
-        let found = false;
-
-        querySnapshot.forEach((doc) => {
-          const classData = doc.data();
-
-          // Verifica se o campo 'name' ou 'role' corresponde ao role do usuário
-          if (classData.name === role || classData.role === role) {
-            if (classData.roles && Array.isArray(classData.roles)) {
-              setAllowedTabs(classData.roles); // Define as abas permitidas
-              found = true;
-            }
-          }
-        });
-
-        // Se não encontrou a classe, define um array vazio (não é um erro)
-        if (!found) {
-          setAllowedTabs([]);
-        }
-      } catch (error) {
-        console.error('Erro ao buscar abas permitidas:', error);
-        setAllowedTabs([]); // Define um array vazio em caso de erro
-      }
+    const fetchTabs = async () => {
+      const tabs = await fetchAllowedTabs(role); // Usa o serviço para buscar as abas permitidas
+      setAllowedTabs(tabs);
     };
 
-    fetchAllowedTabs();
+    fetchTabs();
   }, [role]);
 
   // Busca a foto do perfil do Firestore ao carregar o componente ou quando o userId mudar
@@ -84,34 +58,14 @@ function SideMenu({ role, userName, userPhoto, userId }) {
     }
   };
 
-  // Função para converter a imagem em base64
-  const convertToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-  };
-
   // Função para lidar com o upload da foto
   const handlePhotoUpload = async (e) => {
     const file = e.target.files[0];
     if (!file || !userId) return;
 
-    // Verifica o tamanho da imagem (1 MB = 1 * 1024 * 1024 bytes)
-    if (file.size > 1 * 1024 * 1024) {
-      alert('A imagem deve ter no máximo 1 MB.');
-      return;
-    }
-
     try {
-      // Converte a imagem para base64
-      const base64 = await convertToBase64(file);
-
-      // Atualiza a URL da foto no Firestore
-      const userDoc = doc(db, 'users', userId);
-      await updateDoc(userDoc, { photoURL: base64 });
+      // Usa o serviço para fazer upload da foto
+      const base64 = await uploadPhoto(file, userId);
 
       // Atualiza o estado local com a nova URL da foto
       setPhotoURL(base64);
@@ -121,7 +75,7 @@ function SideMenu({ role, userName, userPhoto, userId }) {
         fileInputRef.current.value = '';
       }
     } catch (error) {
-      console.error('Erro ao fazer upload da foto:', error);
+      alert(error.message); // Exibe mensagem de erro (ex: "A imagem deve ter no máximo 1 MB.")
     }
   };
 
