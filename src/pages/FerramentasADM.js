@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import SideMenu from '../components/SideMenu'; // Importe o SideMenu
 import Classes from '../components/Classes'; // Importe o componente Classes
+import UserClasses from '../components/userClasses'; // Importe o componente UserClasses
 import './FerramentasADM.css'; // Importe os estilos da página
 
 function FerramentasADM() {
@@ -11,6 +12,7 @@ function FerramentasADM() {
   const userId = '123'; // ID do usuário
 
   const [showClasses, setShowClasses] = useState(false); // Controla a exibição do modal Classes
+  const [showUserClasses, setShowUserClasses] = useState(false); // Controla a exibição do modal UserClasses
 
   return (
     <div className="ferramentas-adm-container">
@@ -27,6 +29,7 @@ function FerramentasADM() {
           <div className="button-group">
             <h2>Gerenciamento de Classes</h2>
             <button onClick={() => setShowClasses(true)}>Classes</button>
+            <button onClick={() => setShowUserClasses(true)}>Alterar Classes de Usuarios</button>
           </div>
 
           {/* Grupo 2 */}
@@ -41,6 +44,9 @@ function FerramentasADM() {
 
         {/* Exibe o modal Classes se showClasses for true */}
         {showClasses && <Classes onClose={() => setShowClasses(false)} />}
+
+        {/* Exibe o modal UserClasses se showUserClasses for true */}
+        {showUserClasses && <UserClasses onClose={() => setShowUserClasses(false)} />}
       </div>
     </div>
   );
