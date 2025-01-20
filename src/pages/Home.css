@@ -1,51 +1,183 @@
-/* Estilos gerais */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f5f5dc; /* Bege claro */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-/* Container da home */
+/* Estilos gerais da página */
 .home-container {
-  background-color: #ffffff; /* Branco */
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 600px;
-  text-align: center;
-  margin-left: 60px; /* Espaço para o menu lateral */
+  display: flex;
+  min-height: 100vh; /* Altura mínima da tela inteira */
+  min-width: 1450px; /* Largura mínima de 1500px */
+  background-color: #f0f0f0; /* Fundo cinza claro */
+  margin: 0; /* Remove margens padrão */
+  width: 100%; /* Ocupa toda a largura da tela */
+  overflow-x: auto; /* Permite rolagem horizontal se necessário */
+  overflow-y: auto; /* Permite rolagem vertical */
+  margin-top: 10px; /* Margem superior personalizável */
+  margin-left: 120px; /* Largura do SideMenu */
+  margin-right: 100px; /* Margem direita personalizável */
+  box-sizing: border-box; /* Garante que padding e bordas não aumentem o tamanho */
+  transition: all 0.3s ease; /* Transição suave para todas as propriedades */
 }
 
-/* Título */
-.home-container h1 {
-  color: #8b7355; /* Bege escuro */
+/* Estilos para o conteúdo da página */
+.home-content {
+  flex: 1; /* Ocupa todo o espaço restante */
+  padding: 20px; /* Espaçamento interno */
+  background-color: white; /* Container branco */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  margin: 20px 0; /* Margens superior e inferior */
+  width: calc(100% - 140px); /* Ajusta a largura considerando as margens */
+  max-width: none; /* Remove a limitação de largura máxima */
+  overflow-y: auto; /* Permite rolagem vertical */
+  box-sizing: border-box; /* Garante que padding e bordas não aumentem o tamanho */
+  transition: all 0.3s ease; /* Transição suave para todas as propriedades */
+}
+
+/* Estilos para o título */
+.home-content h1 {
+  font-size: 24px;
   margin-bottom: 20px;
+  color: #333;
 }
 
-/* Parágrafos */
-.home-container p {
-  color: #333;
-  font-size: 18px;
+/* Estilos para os parágrafos */
+.home-content p {
+  color: #555;
+  font-size: 16px;
   margin: 10px 0;
 }
 
-/* Responsividade para celulares */
+/* Botões */
+.button-container {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px; /* Espaçamento entre os botões */
+}
+
+.button-container button {
+  background-color: #a18055; /* Cor do botão */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.button-container button:hover {
+  background-color: #634622; /* Cor do botão ao passar o mouse */
+}
+
+/* Modais */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h2 {
+  font-size: 22px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.modal-content p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.modal-content button {
+  padding: 10px 20px;
+  background-color: #a18055; /* Cor do botão */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
+  background-color: #634622; /* Cor do botão ao passar o mouse */
+}
+
+/* Estilos responsivos para telas menores */
+@media (max-width: 1500px) {
+  .home-container {
+      min-width: 100%; /* Remove a largura mínima em telas menores que 1500px */
+      margin-left: 25px; /* Reduz a margem esquerda */
+      margin-right: 10px; /* Reduz a margem direita */
+  }
+
+  .home-content {
+      width: calc(100% - 20px); /* Ajusta a largura considerando as margens reduzidas */
+      padding: 10px; /* Reduz o padding para melhor aproveitamento do espaço */
+  }
+}
+
+@media (max-width: 768px) {
+  .home-container {
+      margin-left: 60px; /* Reduz a margem esquerda para telas menores */
+      padding: 15px;
+  }
+
+  .home-content h1 {
+      font-size: 22px;
+  }
+
+  .home-content p {
+      font-size: 14px;
+  }
+
+  .button-container {
+      flex-direction: column; /* Coloca os botões um abaixo do outro em telas pequenas */
+      gap: 10px;
+  }
+
+  .modal-content {
+      padding: 15px;
+  }
+
+  .modal-content h2 {
+      font-size: 20px;
+  }
+
+  .modal-content p {
+      font-size: 14px;
+  }
+}
+
 @media (max-width: 480px) {
   .home-container {
-    padding: 15px;
-    margin-left: 50px; /* Ajuste para o menu lateral em celulares */
+      margin-left: 50px; /* Ajuste adicional para telas muito pequenas */
+      padding: 10px;
   }
 
-  .home-container h1 {
-    font-size: 24px;
+  .home-content h1 {
+      font-size: 20px;
   }
 
-  .home-container p {
-    font-size: 16px;
+  .home-content p {
+      font-size: 12px;
+  }
+
+  .button-container button {
+      width: 100%; /* Faz os botões ocuparem toda a largura */
   }
 }
