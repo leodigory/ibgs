@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
-import SideMenu from '../components/SideMenu'; // Importe o SideMenu
-import './FerramentasLideranca.css'; // Importe os estilos da página
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { auth } from '../firebase';
+import { getUserRole, getUserData } from '../auth';
+import SideMenu from '../components/SideMenu';
+import './FerramentasLider.css';
 
-function FerramentasLideranca() {
-  // Exemplo de dados do usuário (substitua pelos dados reais do usuário autenticado)
-  const role = 'lideranca'; // Role do usuário
-  const userName = 'Líder'; // Nome do usuário
-  const userPhoto = '/default-profile.png'; // Foto do usuário
-  const userId = '456'; // ID do usuário
+function FerramentasLider() {
+  const [role, setRole] = useState('guest');
+  const [userName, setUserName] = useState('');
+  const [userPhoto, setUserPhoto] = useState('/default-profile.png');
+  const [userId, setUserId] = useState(null);
+  const location = useLocation();
 
   // Estados para controlar a exibição dos modais
   const [showFerramenta1, setShowFerramenta1] = useState(false); // Modal Agenda de Reuniões
@@ -27,6 +30,32 @@ function FerramentasLideranca() {
       setExpandedGroupIndex(index); // Expande o grupo clicado
     }
   };
+
+  // Busca os dados do usuário ao carregar o componente
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const userRole = await getUserRole(user.uid);
+        const userData = await getUserData(user.uid);
+        setRole(userRole);
+        setUserName(userData.name);
+        setUserPhoto(userData.photoURL || '/default-profile.png');
+        setUserId(user.uid);
+      }
+    };
+
+    // Se houver dados no estado de navegação, use-os
+    if (location.state) {
+      setRole(location.state.role);
+      setUserName(location.state.userName);
+      setUserPhoto(location.state.userPhoto || '/default-profile.png');
+      setUserId(location.state.userId);
+    } else {
+      // Caso contrário, busque os dados do Firestore
+      fetchUserData();
+    }
+  }, [location.state]);
 
   return (
     <div className="ferramentas-lideranca-container">
@@ -157,4 +186,4 @@ function FerramentasLideranca() {
   );
 }
 
-export default FerramentasLideranca;
+export default FerramentasLider;
