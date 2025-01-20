@@ -1,60 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { auth } from '../firebase';
-import { getUserRole, getUserData } from '../auth';
+import React, { useState } from 'react';
 import SideMenu from '../components/SideMenu';
-import Classes from '../components/Classes'; // Importe o componente Classes
-import UserClasses from '../components/userClasses'; // Importe o componente UserClasses
-import './FerramentasADM.css'; // Importe os estilos da página
+import { useUserData } from '../hooks/useUserData'; // Importe o hook
+import './FerramentasADM.css';
 
 function FerramentasADM() {
-  const [role, setRole] = useState('guest');
-  const [userName, setUserName] = useState('');
-  const [userPhoto, setUserPhoto] = useState('/default-profile.png');
-  const [userId, setUserId] = useState(null);
-  const location = useLocation();
+  // Usando o hook para obter os dados do usuário
+  const { role, userName, userPhoto, userId } = useUserData();
 
   // Estados para controlar a exibição dos modais
-  const [showClasses, setShowClasses] = useState(false); // Modal Classes
-  const [showUserClasses, setShowUserClasses] = useState(false); // Modal UserClasses
-
-  // Estado para controlar qual grupo está expandido (usando um índice numérico)
+  const [showClasses, setShowClasses] = useState(false);
+  const [showUserClasses, setShowUserClasses] = useState(false);
   const [expandedGroupIndex, setExpandedGroupIndex] = useState(null);
 
-  // Função para expandir/retrair um grupo
+  // Função para expandir/retrair grupos de botões
   const toggleGroup = (index) => {
     if (expandedGroupIndex === index) {
-      setExpandedGroupIndex(null); // Retrai o grupo se já estiver expandido
+      setExpandedGroupIndex(null);
     } else {
-      setExpandedGroupIndex(index); // Expande o grupo clicado
+      setExpandedGroupIndex(index);
     }
   };
-
-  // Busca os dados do usuário ao carregar o componente
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const user = auth.currentUser;
-      if (user) {
-        const userRole = await getUserRole(user.uid);
-        const userData = await getUserData(user.uid);
-        setRole(userRole);
-        setUserName(userData.name);
-        setUserPhoto(userData.photoURL || '/default-profile.png');
-        setUserId(user.uid);
-      }
-    };
-
-    // Se houver dados no estado de navegação, use-os
-    if (location.state) {
-      setRole(location.state.role);
-      setUserName(location.state.userName);
-      setUserPhoto(location.state.userPhoto || '/default-profile.png');
-      setUserId(location.state.userId);
-    } else {
-      // Caso contrário, busque os dados do Firestore
-      fetchUserData();
-    }
-  }, [location.state]);
 
   return (
     <div className="ferramentas-adm-container">
