@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Home from './pages/Home';
 import FerramentasADM from './pages/FerramentasADM'; // Importe a página FerramentasADM
+import FerramentasLideranca from './pages/FerramentasLideranca'; // Importe a página FerramentasLideranca
 import PrivateRoute from './components/PrivateRoute'; // Importa o PrivateRoute
 
 function App() {
@@ -32,6 +33,16 @@ function App() {
           element={
             <PrivateRoute>
               <FerramentasADM />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Rota Privada: Ferramentas de Liderança */}
+        <Route
+          path="/ferramentas-lideranca"
+          element={
+            <PrivateRoute>
+              <FerramentasLideranca />
             </PrivateRoute>
           }
         />

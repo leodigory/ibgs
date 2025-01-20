@@ -117,6 +117,7 @@
   border: 1px solid #e0e0e0;
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease;
+  position: relative; /* Para posicionar o checkbox personalizado */
 }
 
 .tab-checkbox:hover {
@@ -124,15 +125,49 @@
   border-color: #ccc;
 }
 
-.tab-checkbox input {
-  margin: 0;
+/* Esconde o checkbox nativo */
+.hidden-checkbox {
+  position: absolute;
+  opacity: 0;
   cursor: pointer;
+  height: 0;
+  width: 0;
 }
 
-.tab-checkbox label {
-  font-size: 14px;
-  color: #333;
-  cursor: pointer;
+/* Checkbox personalizado */
+.checkmark {
+  position: relative;
+  height: 20px;
+  width: 20px;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Quando o checkbox está marcado */
+.hidden-checkbox:checked ~ .checkmark {
+  background-color: #4caf50;
+  border-color: #4caf50;
+}
+
+/* Ícone de check (✔) */
+.checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Mostra o ícone de check quando o checkbox está marcado */
+.hidden-checkbox:checked ~ .checkmark::after {
+  display: block;
 }
 
 /* Formulário para adicionar nova classe */

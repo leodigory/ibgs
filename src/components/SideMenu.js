@@ -1,12 +1,12 @@
-// components/SideMenu.js
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, collection, setDoc, getDocs } from 'firebase/firestore'; // Usamos setDoc em vez de addDoc
 import { db } from '../firebase';
 import { fetchAllowedTabs } from '../services/roleService'; // Serviço para buscar abas permitidas
 import { convertToBase64, uploadPhoto } from '../services/imageService'; // Serviço para manipulação de imagens
+import { renderMenu } from './tabsConfig'; // Importa a função de renderização
 import './SideMenu.css';
 
 function SideMenu({ role, userName, userPhoto, userId }) {
@@ -16,15 +16,68 @@ function SideMenu({ role, userName, userPhoto, userId }) {
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
+  // Função para sincronizar as abas com o Firebase
+  const syncTabsWithFirebase = async (tabs) => {
+    const tabsCollectionRef = collection(db, 'tabs'); // Coleção correta: 'tabs'
+
+    try {
+      // Busca as abas já existentes no Firebase
+      const querySnapshot = await getDocs(tabsCollectionRef);
+      const existingTabs = new Set(querySnapshot.docs.map(doc => doc.id)); // Usamos doc.id para verificar duplicação
+
+      // Adiciona as novas abas ao Firebase, evitando duplicação
+      for (const tab of tabs) {
+        if (!existingTabs.has(tab)) {
+          // Usamos setDoc com o nome da aba como ID
+          await setDoc(doc(tabsCollectionRef, tab), { name: tab });
+          console.log(`Aba "${tab}" adicionada ao Firebase.`);
+        }
+      }
+    } catch (error) {
+      console.error('Erro ao sincronizar abas com o Firebase:', error);
+    }
+  };
+
+  // Função para extrair as abas dinamicamente do tabsConfig.js
+  const extractTabsFromConfig = (renderMenu) => {
+    const tabs = new Set();
+
+    // Converte a função renderMenu para string
+    const renderMenuString = renderMenu.toString();
+
+    // Usa uma expressão regular para encontrar todas as ocorrências de allowedTabs.includes('...')
+    const regex = /allowedTabs\.includes\('([^']+)'/g;
+    let match;
+
+    // Itera sobre todas as correspondências e adiciona as abas ao Set
+    while ((match = regex.exec(renderMenuString)) !== null) {
+      tabs.add(match[1]);
+    }
+
+    // Retorna as abas como um array
+    return Array.from(tabs);
+  };
+
+  // Extrai as abas dinamicamente do arquivo tabsConfig.js
+  const allTabs = extractTabsFromConfig(renderMenu);
+
   // Busca as abas permitidas para o role do usuário
   useEffect(() => {
     const fetchTabs = async () => {
-      const tabs = await fetchAllowedTabs(role); // Usa o serviço para buscar as abas permitidas
-      setAllowedTabs(tabs);
+      try {
+        const tabs = await fetchAllowedTabs(role); // Busca as abas permitidas
+        setAllowedTabs(tabs); // Atualiza o estado com as abas permitidas
+
+        // Sincroniza todas as abas com o Firebase
+        await syncTabsWithFirebase(allTabs);
+      } catch (error) {
+        console.error('Erro ao buscar abas permitidas:', error);
+        setAllowedTabs([]); // Em caso de erro, define as abas permitidas como uma lista vazia
+      }
     };
 
-    fetchTabs();
-  }, [role]);
+    fetchTabs(); // Chama a função para buscar as abas permitidas
+  }, [role]); // Executa sempre que o role mudar
 
   // Busca a foto do perfil do Firestore ao carregar o componente ou quando o userId mudar
   useEffect(() => {
@@ -107,65 +160,8 @@ function SideMenu({ role, userName, userPhoto, userId }) {
           <p className="role-info">Acesso como {role} liberado</p>
         </div>
       </div>
-      {/* Lista de botões do menu */}
-      <ul>
-        {allowedTabs.includes('Home') && (
-          <li onClick={() => navigate('/Home')}>
-            <img src="/home.png" alt="Home" className="menu-item-icon" />
-            {isExpanded && <span className="menu-item-text">Home</span>}
-          </li>
-        )}
-        {allowedTabs.includes('Ferramentas ADM') && (
-          <li onClick={() => navigate('/ferramentas-adm')}>
-            <img src="/ferramenta.png" alt="Ferramentas ADM" className="menu-item-icon" />
-            {isExpanded && <span className="menu-item-text">Ferramentas ADM</span>}
-          </li>
-        )}
-        {allowedTabs.includes('Culto') && (
-          <li onClick={() => navigate('/culto')}>
-            <img src="/culto.png" alt="Culto" className="menu-item-icon" />
-            {isExpanded && <span className="menu-item-text">Culto</span>}
-          </li>
-        )}
-        {allowedTabs.includes('Calendário') && (
-          <li onClick={() => navigate('/calendario')}>
-            <img src="/calendario.png" alt="Calendário" className="menu-item-icon" />
-            {isExpanded && <span className="menu-item-text">Calendário</span>}
-          </li>
-        )}
-        {allowedTabs.includes('Oferta') && (
-          <li onClick={() => navigate('/oferta')}>
-            <img src="/oferta.png" alt="Oferta" className="menu-item-icon" />
-            {isExpanded && <span className="menu-item-text">Oferta</span>}
-          </li>
-        )}
-        {allowedTabs.includes('Quero ser membro') && (
-          <li onClick={() => navigate('/membro')}>
-            <img src="/membro.png" alt="Quero ser membro" className="menu-item-icon" />
-            {isExpanded && <span className="menu-item-text">Quero ser membro</span>}
-          </li>
-        )}
-        {allowedTabs.includes('Sobre') && (
-          <li onClick={() => navigate('/sobre')}>
-            <img src="/sobre.png" alt="Sobre" className="menu-item-icon" />
-            {isExpanded && <span className="menu-item-text">Sobre</span>}
-          </li>
-        )}
-      </ul>
-      {/* Círculo pequeno com a foto do perfil e texto abaixo (quando o menu está retraído) */}
-      <div className="mini-profile-container">
-        <div className="mini-profile" onClick={() => fileInputRef.current.click()}>
-          <img src={photoURL} alt="Mini Profile" onError={(e) => { e.target.src = '/default-profile.png'; }} />
-        </div>
-        <p className="mini-profile-name">{firstName}</p>
-      </div>
-      {/* Botão de Logout */}
-      <div className="logout-container">
-        <button className="logout-button" onClick={handleLogout}>
-          <img src="/log-out.png" alt="Logout" className="logout-icon" />
-          {isExpanded && <span className="logout-text">Logout</span>}
-        </button>
-      </div>
+      {/* Renderiza o menu usando a função importada */}
+      {renderMenu(allowedTabs, navigate, isExpanded, photoURL, firstName, fileInputRef, handleLogout)}
     </div>
   );
 }

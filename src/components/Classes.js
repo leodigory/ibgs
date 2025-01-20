@@ -124,7 +124,9 @@ function Classes({ onClose }) {
                       type="checkbox"
                       checked={cls.roles.includes(tab)}
                       onChange={() => handleTabSelection(cls.id, tab)}
+                      className="hidden-checkbox"
                     />
+                    <div className="checkmark"></div>
                     {tab}
                   </label>
                 ))}

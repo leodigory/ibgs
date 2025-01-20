@@ -1,0 +1,148 @@
+/* Estilos gerais da página */
+.ferramentas-lideranca-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  text-align: center;
+}
+
+.ferramentas-lideranca-content {
+  flex: 1;
+  padding: 20px;
+  margin-left: 10px; /* Ajuste conforme o tamanho do SideMenu */
+}
+
+/* Título com tarja branca */
+.title-container {
+  background-color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.title-container h1 {
+  font-size: 2rem;
+  color: #333;
+  margin: 0;
+}
+
+/* Lista de grupos de botões */
+.button-groups {
+  display: flex;
+  flex-wrap: wrap; /* Permite que os grupos quebrem para a próxima linha */
+  gap: 20px; /* Espaçamento entre os grupos */
+}
+
+.button-group {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer; /* Torna o container clicável */
+  flex: 1 1 calc(20% - 20px); /* 5 grupos por linha (20% de largura) */
+  max-width: calc(20% - 20px); /* Limita a largura máxima */
+  height: auto; /* Altura automática para acomodar o conteúdo */
+  min-height: 100px; /* Altura mínima para os grupos não expandidos */
+  transition: min-height 0.3s ease; /* Transição suave para a altura */
+}
+
+.button-group.expanded {
+  min-height: 200px; /* Altura maior para o grupo expandido */
+}
+
+.button-group h2 {
+  font-size: 1.5rem;
+  color: #4caf50;
+  margin-bottom: 15px;
+}
+
+.button-group button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button-group button:hover {
+  background-color: #45a049;
+}
+
+/* Responsividade: Telas menores */
+@media (max-width: 1200px) {
+  .button-group {
+    flex: 1 1 calc(33.33% - 20px); /* 3 grupos por linha */
+    max-width: calc(33.33% - 20px);
+  }
+}
+
+@media (max-width: 768px) {
+  .button-group {
+    flex: 1 1 calc(50% - 20px); /* 2 grupos por linha */
+    max-width: calc(50% - 20px);
+  }
+}
+
+@media (max-width: 480px) {
+  .button-group {
+    flex: 1 1 100%; /* 1 grupo por linha */
+    max-width: 100%;
+  }
+}
+
+/* Estilos para os modais (mantidos iguais) */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+}
+
+.modal-content h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.modal-content p {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.modal-content button {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
+  background-color: #45a049;
+}
