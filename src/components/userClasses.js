@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase'; // Importe o Firestore
-import './userClasses.css'; // Estilos do componente
+import './UserClasses.css'; // Estilos do componente
 
 function UserClasses({ onClose }) {
   const [users, setUsers] = useState([]); // Lista de usuários

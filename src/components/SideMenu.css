@@ -221,7 +221,7 @@
 /* Estilo para o texto abaixo do círculo da foto no menu retraído */
 .mini-profile-container {
   position: absolute; /* Posicionamento absoluto */
-  bottom: 65px; /* Distância do rodapé */
+  bottom: 45px; /* Distância do rodapé */
   left: 50%; /* Centraliza horizontalmente */
   transform: translateX(-50%); /* Ajusta a centralização */
   text-align: center; /* Centraliza o texto */
@@ -232,6 +232,7 @@
   color: white !important; /* Força a cor branca */
   font-style: italic;
   margin-top: 0px;
+  
 }
 
 /* Oculta o mini-profile-container quando o menu está expandido */

@@ -3,7 +3,7 @@ import SideMenu from '../components/SideMenu';
 import { useUserData } from '../hooks/useUserData'; // Importe o hook
 import './FerramentasLider.css';
 
-function FerramentasADM() {
+function FerramentasLideranca() {
   // Usando o hook para obter os dados do usuário
   const { role, userName, userPhoto, userId } = useUserData();
 
@@ -43,7 +43,7 @@ function FerramentasADM() {
             className={`button-group ${expandedGroupIndex === 0 ? 'expanded' : ''}`}
             onClick={() => toggleGroup(0)}
           >
-            <h2>1. Gerenciamento de Equipes</h2>
+            <h2>Gerenciamento de Equipes</h2>
             {expandedGroupIndex === 0 && (
               <>
                 <button onClick={(e) => { e.stopPropagation(); setShowFerramenta1(true); }}>
@@ -61,7 +61,7 @@ function FerramentasADM() {
             className={`button-group ${expandedGroupIndex === 1 ? 'expanded' : ''}`}
             onClick={() => toggleGroup(1)}
           >
-            <h2>2. Outras Ferramentas</h2>
+            <h2>Outras Ferramentas</h2>
             {expandedGroupIndex === 1 && (
               <>
                 <button onClick={(e) => { e.stopPropagation(); alert('Botão 1 clicado!'); }}>
@@ -79,7 +79,7 @@ function FerramentasADM() {
             className={`button-group ${expandedGroupIndex === 2 ? 'expanded' : ''}`}
             onClick={() => toggleGroup(2)}
           >
-            <h2>3. Gerenciamento de Culto</h2>
+            <h2>Gerenciamento de Culto</h2>
             {expandedGroupIndex === 2 && (
               <>
                 <button onClick={(e) => { e.stopPropagation(); setShowLouvor(true); }}>
@@ -98,7 +98,7 @@ function FerramentasADM() {
           {/* Adicione mais grupos conforme necessário */}
         </div>
 
-        {/* Modais (mantidos iguais) */}
+        {/* Modais */}
         {showFerramenta1 && (
           <div className="modal">
             <div className="modal-content">
@@ -153,4 +153,4 @@ function FerramentasADM() {
   );
 }
 
-export default FerramentasADM;
+export default FerramentasLideranca;

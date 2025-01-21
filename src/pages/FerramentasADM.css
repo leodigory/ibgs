@@ -11,6 +11,7 @@
     margin-top: 10px; /* Margem superior personalizável */
     margin-left: 120px; /* Largura do SideMenu */
     margin-right: 100px; /* Margem direita personalizável */
+    padding-left: 60px;
     box-sizing: border-box; /* Garante que padding e bordas não aumentem o tamanho */
     transition: all 0.3s ease; /* Transição suave para todas as propriedades */
 }
@@ -59,7 +60,7 @@
 }
 
 .button-group h2 {
-    font-size: 18px;
+    font-size: 10px;
     margin-bottom: 10px;
     color: #555;
 }

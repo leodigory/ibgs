@@ -7,26 +7,35 @@ function Classes({ onClose }) {
   const [classes, setClasses] = useState([]); // Lista de classes
   const [newClassName, setNewClassName] = useState(''); // Nome da nova classe
   const [tabs, setTabs] = useState([]); // Lista de abas disponíveis
-  const [selectedTabs, setSelectedTabs] = useState({}); // Abas selecionadas para cada classe
+  const [loading, setLoading] = useState(false); // Estado de carregamento
+  const [error, setError] = useState(''); // Mensagem de erro
 
   // Busca as classes e as abas do Firestore ao carregar o componente
   useEffect(() => {
     const fetchData = async () => {
-      // Busca as classes
-      const classesSnapshot = await getDocs(collection(db, 'classes'));
-      const classesList = [];
-      classesSnapshot.forEach((doc) => {
-        classesList.push({ id: doc.id, name: doc.data().name, roles: doc.data().roles || [] });
-      });
-      setClasses(classesList);
+      setLoading(true);
+      try {
+        // Busca as classes
+        const classesSnapshot = await getDocs(collection(db, 'classes'));
+        const classesList = [];
+        classesSnapshot.forEach((doc) => {
+          classesList.push({ id: doc.id, name: doc.data().name, roles: doc.data().roles || [] });
+        });
+        setClasses(classesList);
 
-      // Busca as abas
-      const tabsSnapshot = await getDocs(collection(db, 'tabs'));
-      const tabsList = [];
-      tabsSnapshot.forEach((doc) => {
-        tabsList.push(doc.id); // Assume que o nome da aba é o ID do documento
-      });
-      setTabs(tabsList);
+        // Busca as abas
+        const tabsSnapshot = await getDocs(collection(db, 'tabs'));
+        const tabsList = [];
+        tabsSnapshot.forEach((doc) => {
+          tabsList.push(doc.id); // Assume que o nome da aba é o ID do documento
+        });
+        setTabs(tabsList);
+      } catch (error) {
+        setError('Erro ao carregar dados.');
+        console.error('Erro ao buscar dados:', error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();
@@ -34,7 +43,16 @@ function Classes({ onClose }) {
 
   // Função para adicionar uma nova classe
   const handleAddClass = async () => {
-    if (!newClassName.trim()) return; // Verifica se o campo não está vazio
+    if (!newClassName.trim()) {
+      setError('O nome da classe não pode estar vazio.');
+      return;
+    }
+
+    // Verifica se a classe já existe
+    if (classes.some((cls) => cls.name === newClassName)) {
+      setError('Uma classe com esse nome já existe.');
+      return;
+    }
 
     try {
       // Adiciona a nova classe ao Firestore
@@ -46,7 +64,10 @@ function Classes({ onClose }) {
       // Atualiza a lista de classes localmente
       setClasses([...classes, { id: newClassRef.id, name: newClassName, roles: [] }]);
       setNewClassName(''); // Limpa o campo de texto
+      setError(''); // Limpa a mensagem de erro
+      alert('Classe adicionada com sucesso!');
     } catch (error) {
+      setError('Erro ao adicionar classe.');
       console.error('Erro ao adicionar classe:', error);
     }
   };
@@ -56,7 +77,9 @@ function Classes({ onClose }) {
     try {
       await deleteDoc(doc(db, 'classes', id)); // Exclui a classe do Firestore
       setClasses(classes.filter((cls) => cls.id !== id)); // Atualiza a lista local
+      alert('Classe excluída com sucesso!');
     } catch (error) {
+      setError('Erro ao excluir classe.');
       console.error('Erro ao excluir classe:', error);
     }
   };
@@ -81,7 +104,9 @@ function Classes({ onClose }) {
           cls.id === classId ? { ...cls, roles: updatedRoles } : cls
         )
       );
+      alert('Aba atualizada com sucesso!');
     } catch (error) {
+      setError('Erro ao atualizar abas da classe.');
       console.error('Erro ao atualizar abas da classe:', error);
     }
   };
@@ -89,6 +114,7 @@ function Classes({ onClose }) {
   // Função para garantir que o texto seja sempre em minúsculas
   const handleInputChange = (e) => {
     setNewClassName(e.target.value.toLowerCase()); // Converte o texto para minúsculas
+    setError(''); // Limpa a mensagem de erro ao digitar
   };
 
   return (
@@ -99,6 +125,9 @@ function Classes({ onClose }) {
           <h2>Gerenciar Classes</h2>
           <button className="close-button" onClick={onClose}>X</button>
         </div>
+
+        {/* Mensagem de erro */}
+        {error && <p className="error-message">{error}</p>}
 
         {/* Formulário para adicionar nova classe */}
         <div className="add-class">
@@ -113,28 +142,32 @@ function Classes({ onClose }) {
         </div>
 
         {/* Lista de classes e abas */}
-        <div className="classes-list">
-          {classes.map((cls) => (
-            <div key={cls.id} className="class-item">
-              <h3>{cls.name}</h3>
-              <div className="tabs-list">
-                {tabs.map((tab) => (
-                  <label key={tab} className="tab-checkbox">
-                    <input
-                      type="checkbox"
-                      checked={cls.roles.includes(tab)}
-                      onChange={() => handleTabSelection(cls.id, tab)}
-                      className="hidden-checkbox"
-                    />
-                    <div className="checkmark"></div>
-                    {tab}
-                  </label>
-                ))}
+        {loading ? (
+          <p>Carregando...</p>
+        ) : (
+          <div className="classes-list">
+            {classes.map((cls) => (
+              <div key={cls.id} className="class-item">
+                <h3>{cls.name}</h3>
+                <div className="tabs-list">
+                  {tabs.map((tab) => (
+                    <label key={tab} className="tab-checkbox">
+                      <input
+                        type="checkbox"
+                        checked={cls.roles.includes(tab)}
+                        onChange={() => handleTabSelection(cls.id, tab)}
+                        className="hidden-checkbox"
+                      />
+                      <div className="checkmark"></div>
+                      {tab}
+                    </label>
+                  ))}
+                </div>
+                <button onClick={() => handleDeleteClass(cls.id)}>Excluir</button>
               </div>
-              <button onClick={() => handleDeleteClass(cls.id)}>Excluir</button>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

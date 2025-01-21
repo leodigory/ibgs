@@ -11,6 +11,8 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh; /* Corrigido para 100vh */
+  padding-left: 40px;
+  padding-right: 40px;
 }
 
 /* Container principal */
