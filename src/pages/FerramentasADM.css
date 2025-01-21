@@ -106,12 +106,14 @@
     .button-groups {
         flex-direction: column; /* Coloca os grupos um acima do outro */
         gap: 10px; /* Reduz o espaçamento entre os grupos */
+        
     }
 
     .button-group {
         flex: 1 1 100%; /* Ocupa 100% da largura no celular */
         min-width: auto; /* Remove a largura mínima para melhor ajuste */
         padding: 15px; /* Ajusta o padding para melhor aproveitamento do espaço */
+        
     }
 
     .button-group h2 {
@@ -121,5 +123,15 @@
     .button-group button {
         width: 100%; /* Faz os botões ocuparem toda a largura do grupo */
         margin-right: 0; /* Remove a margem direita dos botões */
+        
     }
+
+    /* Estilos para o título */
+.ferramentas-adm-content h1 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    margin-left: 35px;
+    color: #333;
+}
+
 }
