@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import SideMenu from '../components/SideMenu';
 import { useUserData } from '../hooks/useUserData'; // Importe o hook
 import Classes from '../components/Classes'; // Importe o componente Classes
-import UserClasses from '../components/UserClasses'; // Note o "U" maiúsculo
+import UserClasses from '../components/ClassesUser'; // Note o "U" maiúsculo
 import './FerramentasADM.css'; // Importe os estilos da página
 
 function FerramentasADM() {
-  // Usando o hook para obter os dados do usuário
+  // Usando o hook para obter os dados do usuárrio
   const { role, userName, userPhoto, userId } = useUserData();
 
   // Estados para controlar a exibição dos modais
