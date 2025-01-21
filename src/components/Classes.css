@@ -1,0 +1,209 @@
+.classes-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Garante que o modal fique acima de outros elementos */
+}
+
+.classes-content {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  width: 600px;
+  max-width: 90%;
+  max-height: 80vh;
+  overflow-y: auto; /* Barra de rolagem vertical */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Cabeçalho do modal */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.2s ease;
+}
+
+.close-button:hover {
+  color: #000;
+}
+
+/* Lista de classes */
+.classes-list {
+  margin-top: 20px;
+}
+
+.class-item {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  position: relative; /* Para posicionar o botão Excluir */
+}
+
+.class-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.class-item h3 {
+  margin: 0 0 10px 0; /* Espaçamento menor abaixo do nome da classe */
+  font-size: 18px;
+  font-weight: 700; /* Negrito */
+  color: #8b7355; /* Cor bege */
+}
+
+/* Botão de excluir classe */
+.class-item button {
+  position: absolute; /* Posiciona o botão no canto superior direito */
+  top: 15px;
+  right: 15px;
+  padding: 6px 12px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.class-item button:hover {
+  background-color: #e60000;
+}
+
+/* Lista de abas (checkboxes) */
+.tabs-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px; /* Espaçamento menor entre as abas */
+  margin-bottom: 10px; /* Espaçamento menor abaixo das abas */
+}
+
+.tab-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffffff;
+  padding: 8px 12px; /* Espaçamento menor */
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  position: relative; /* Para posicionar o checkbox personalizado */
+}
+
+.tab-checkbox:hover {
+  background-color: #f1f1f1;
+  border-color: #ccc;
+}
+
+/* Esconde o checkbox nativo */
+.hidden-checkbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Checkbox personalizado */
+.checkmark {
+  position: relative;
+  height: 20px;
+  width: 20px;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Quando o checkbox está marcado */
+.hidden-checkbox:checked ~ .checkmark {
+  background-color: #4caf50;
+  border-color: #4caf50;
+}
+
+/* Ícone de check (✔) */
+.checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Mostra o ícone de check quando o checkbox está marcado */
+.hidden-checkbox:checked ~ .checkmark::after {
+  display: block;
+}
+
+/* Formulário para adicionar nova classe */
+.add-class {
+  margin-top: 25px;
+  display: flex;
+  gap: 10px;
+}
+
+.add-class input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #333;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.add-class input:focus {
+  border-color: #4caf50;
+}
+
+.add-class button {
+  padding: 12px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.add-class button:hover {
+  background-color: #45a049;
+}

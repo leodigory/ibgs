@@ -1,0 +1,194 @@
+/* Estilos gerais da página */
+.ferramentas-lideranca-container {
+
+  min-height: 100vh; /* Altura mínima da tela inteira */
+  background-color: #f0f0f0; /* Fundo cinza claro */
+  min-width: 1450px; /* Largura mínima de 1500px */
+  margin: 0; /* Remove margens padrão */
+  width: 100%; /* Ocupa toda a largura da tela */
+  overflow-x: auto; /* Permite rolagem horizontal se necessário */
+  overflow-y: auto; /* Permite rolagem vertical */
+  margin-top: 10px; /* Margem superior personalizável */
+  margin-left: 120px; /* Largura do SideMenu */
+  margin-right: 100px; /* Margem direita personalizável */
+  padding-left: 60px;
+  box-sizing: border-box; /* Garante que padding e bordas não aumentem o tamanho */
+  transition: all 0.3s ease; /* Transição suave para todas as propriedades */
+}
+
+/* Estilos para o conteúdo da página */
+.ferramentas-lideranca-content {
+  
+  padding: 20px; /* Espaçamento interno */
+  background-color: white; /* Container branco */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  margin: 20px 0; /* Margens superior e inferior */
+  width: calc(100% - 140px); /* Ajusta a largura considerando as margens */
+  max-width: none; /* Remove a limitação de largura máxima */
+  overflow-y: auto; /* Permite rolagem vertical */
+  box-sizing: border-box; /* Garante que padding e bordas não aumentem o tamanho */
+  transition: all 0.3s ease; /* Transição suave para todas as propriedades */
+}
+
+/* Estilos para o título */
+.ferramentas-lideranca-content h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Estilos para a lista de grupos de botões */
+.button-groups {
+  display: block; /* Remove o flex */
+  font-size: 0; /* Remove espaços entre os elementos inline-block */
+  padding-bottom: 5px;
+  
+}
+
+/* Estilos para cada grupo de botões */
+.button-group {
+  display: inline-block; /* Coloca os grupos lado a lado */
+  vertical-align: top; /* Alinha os grupos no topo */
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  width: calc(20% - 20px); /* 5 grupos por linha (20% de largura cada) */
+  box-sizing: border-box; /* Garante que padding e bordas não aumentem o tamanho */
+  transition: all 0.3s ease; /* Transição suave para todas as propriedades */
+  margin-right: 10px; /* Espaçamento entre os grupos */
+  font-size: 16px; /* Restaura o tamanho da fonte */
+  padding-bottom: 0px;
+  margin-bottom: 10px;
+  padding-top: 0px;
+  margin-top: 0px;
+}
+
+/* Remove a margem direita do último grupo em cada linha */
+.button-group:nth-child(5n) {
+  margin-right: 0;
+}
+
+/* Quando um grupo é expandido */
+.button-group.expanded {
+  min-height: 150px; /* Altura mínima ao expandir */
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  padding-top: 0px;
+  margin-top: 0px;
+}
+
+.button-group h2 {
+  font-size: 15px; 
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.button-group button {
+  background-color: #a18055; /* Cor do botão */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 10px; /* Espaçamento entre os botões */
+  width: 100%; /* Faz os botões ocuparem toda a largura do grupo */
+  box-sizing: border-box; /* Garante que padding e bordas não aumentem o tamanho */
+  transition: all 0.3s ease; /* Transição suave para todas as propriedades */
+}
+
+.button-group button:hover {
+  background-color: #634622; /* Cor do botão ao passar o mouse */
+}
+
+/* Estilos responsivos para telas menores */
+@media (max-width: 1500px) {
+  .ferramentas-lideranca-container {
+      min-width: 100%; /* Remove a largura mínima em telas menores que 1500px */
+      margin-left: 25px; /* Reduz a margem esquerda */
+      margin-right: 10px; /* Reduz a margem direita */
+  }
+
+  .ferramentas-lideranca-content {
+      width: calc(100% - 20px); /* Ajusta a largura considerando as margens reduzidas */
+      padding: 10px; /* Reduz o padding para melhor aproveitamento do espaço */
+  }
+
+  .button-group {
+      width: calc(33.33% - 20px); /* 3 grupos por linha em telas médias */
+  }
+
+  .button-group:nth-child(3n) {
+      margin-right: 0; /* Remove a margem direita do último grupo em cada linha */
+  }
+}
+
+@media (max-width: 768px) {
+  .button-group {
+      width: calc(50% - 20px); /* 2 grupos por linha em telas menores */
+  }
+
+  .button-group:nth-child(2n) {
+      margin-right: 0; /* Remove a margem direita do último grupo em cada linha */
+  }
+}
+
+@media (max-width: 480px) {
+  .button-group {
+      width: 100%; /* 1 grupo por linha em telas muito pequenas */
+      margin-right: 0; /* Remove a margem direita */
+  }
+}
+
+/* Estilos para os modais */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro semi-transparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Garante que o modal fique acima de tudo */
+}
+
+.modal-content {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.modal-content h2 {
+  font-size: 22px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.modal-content p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.modal-content button {
+  padding: 10px 20px;
+  background-color: #a18055; /* Cor do botão */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
+  background-color: #634622; /* Cor do botão ao passar o mouse */
+}

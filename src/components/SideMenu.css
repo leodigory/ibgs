@@ -1,0 +1,241 @@
+/* Estilos gerais do menu */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: rgba(139, 115, 85, 0.8); /* Bege escuro com 80% de opacidade */
+  color: white;
+  width: 60px;
+  transition: width 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribui o espaço entre os itens */
+}
+
+.side-menu.expanded {
+  width: 250px;
+}
+
+.menu-icon {
+  padding: 20px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.side-menu ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: none;
+  flex-grow: 1; /* Faz o conteúdo ocupar o espaço disponível */
+}
+
+.side-menu.expanded ul {
+  display: block;
+}
+
+.side-menu ul li {
+  padding: 15px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center; /* Alinha ícone e texto verticalmente */
+}
+
+.side-menu ul li:hover {
+  background-color: rgba(107, 90, 69, 0.8); /* Bege mais escuro com 80% de opacidade */
+}
+
+/* Estilo dos ícones nos itens do menu */
+.side-menu ul li .menu-item-icon {
+  width: 24px; /* Tamanho do ícone */
+  height: 24px; /* Tamanho do ícone */
+  margin-right: 10px; /* Espaço entre o ícone e o texto */
+}
+
+.side-menu ul li .menu-item-text {
+  display: none; /* Oculta o texto por padrão */
+}
+
+.side-menu.expanded ul li .menu-item-text {
+  display: inline; /* Mostra o texto quando o menu está expandido */
+}
+
+/* Container do botão de Logout */
+.logout-container {
+  padding: 20px;
+  text-align: center; /* Centraliza o botão */
+  border-top: 1px solid rgba(107, 90, 69, 0.8); /* Linha separadora com transparência */
+  flex-shrink: 0; /* Impede que o container encolha */
+}
+
+/* Estilo do botão de Logout */
+.logout-button {
+  background-color: transparent; /* Fundo transparente */
+  color: white; /* Cor do texto */
+  border: none; /* Remove a borda */
+  padding: 0; /* Remove o padding interno */
+  font-size: 16px; /* Tamanho da fonte para o texto */
+  cursor: pointer; /* Cursor de ponteiro */
+  width: 100%; /* Ocupa toda a largura do container */
+  transition: font-size 0.3s ease; /* Transição suave */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centraliza o conteúdo */
+}
+
+/* Estilo do ícone de Logout */
+.logout-icon {
+  width: 24px; /* Tamanho do ícone */
+  height: 24px; /* Tamanho do ícone */
+}
+
+.logout-text {
+  display: none; /* Oculta o texto por padrão */
+  margin-left: 10px; /* Espaço entre o ícone e o texto */
+}
+
+.side-menu.expanded .logout-text {
+  display: inline; /* Mostra o texto quando o menu está expandido */
+}
+
+.logout-button:hover {
+  opacity: 0.8; /* Efeito de transparência ao passar o mouse */
+}
+
+/* Responsividade para celulares */
+@media (max-width: 480px) {
+  .side-menu {
+    width: 50px;
+  }
+
+  .side-menu.expanded {
+    width: 200px;
+  }
+
+  .menu-icon {
+    padding: 15px;
+    font-size: 20px;
+  }
+
+  .side-menu ul li {
+    padding: 10px 15px;
+  }
+
+  .logout-container {
+    padding: 15px;
+  }
+
+  .logout-icon {
+    width: 25px; /* Tamanho do ícone menor para celulares */
+    height: 25px; /* Tamanho do ícone menor para celulares */
+  }
+}
+
+/* Estilos para o perfil do usuário */
+.user-profile {
+  text-align: center;
+  padding: 20px;
+  border-bottom: 1px solid rgba(107, 90, 69, 0.8); /* Linha separadora com transparência */
+  flex-shrink: 0; /* Impede que o perfil encolha */
+  display: none; /* Oculta o perfil por padrão */
+}
+
+.side-menu.expanded .user-profile {
+  display: block; /* Mostra o perfil quando o menu está expandido */
+}
+
+.profile-picture {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: -20px auto;
+  margin-bottom: 10px;
+  background-color: rgba(255, 255, 255, 0.1); /* Fundo claro para a foto */
+}
+
+.profile-picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-info h3 {
+  margin: 10px 0 5px;
+  font-size: 1.2em;
+  color: white;
+}
+
+.profile-info p {
+  margin: 0;
+  font-size: 0.9em;
+  color: rgba(255, 255, 255, 0.8); /* Texto com transparência */
+}
+
+.profile-info .role-info {
+  font-size: 0.8em;
+  color: rgba(255, 255, 255, 0.6); /* Texto menor e mais claro */
+}
+
+/* Tarja branca atrás do texto "Classe: (role)" */
+.profile-info .role-tag {
+  background-color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.profile-info .role-tag p {
+  color: rgba(139, 115, 85, 1); /* Cor do texto dentro da tarja */
+  font-weight: bold; /* Texto em negrito */
+  font-style: italic; /* Texto em itálico */
+  margin: 0;
+}
+
+/* Círculo pequeno com a foto do perfil acima do rodapé (quando o menu está retraído) */
+.mini-profile {
+  display: none; /* Oculta por padrão */
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.1); /* Fundo claro para a foto */
+  position: absolute; /* Posicionamento absoluto */
+  bottom: 25px; /* Distância do rodapé */
+  left: 50%; /* Centraliza horizontalmente */
+  transform: translateX(-50%); /* Ajusta a centralização */
+}
+
+.side-menu:not(.expanded) .mini-profile {
+  display: block; /* Mostra apenas quando o menu está retraído */
+}
+
+.mini-profile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Estilo para o texto abaixo do círculo da foto no menu retraído */
+.mini-profile-container {
+  position: absolute; /* Posicionamento absoluto */
+  bottom: 45px; /* Distância do rodapé */
+  left: 50%; /* Centraliza horizontalmente */
+  transform: translateX(-50%); /* Ajusta a centralização */
+  text-align: center; /* Centraliza o texto */
+}
+
+.mini-profile-name {
+  font-size: 0.7em !important;
+  color: white !important; /* Força a cor branca */
+  font-style: italic;
+  margin-top: 0px;
+  
+}
+
+/* Oculta o mini-profile-container quando o menu está expandido */
+.side-menu.expanded .mini-profile-container {
+  display: none;
+}

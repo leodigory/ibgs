@@ -1,0 +1,144 @@
+.user-classes-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Garante que o modal fique acima de outros elementos */
+  }
+  
+  .user-classes-content {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    width: 600px;
+    max-width: 90%;
+    max-height: 80vh;
+    overflow-y: auto; /* Barra de rolagem vertical */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Cabeçalho do modal */
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .modal-header h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.2s ease;
+  }
+  
+  .close-button:hover {
+    color: #000;
+  }
+  
+  /* Lista de usuários */
+  .users-list {
+    margin-top: 15px;
+    
+  }
+  
+  .user-item {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  
+  .user-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+  
+  .user-item h3 {
+    margin: 0 0 -10px 0; /* Espaçamento menor abaixo do nome do usuário */
+    font-size: 18px;
+    font-weight: 700;
+    color: #8b7355; /* Cor bege */
+  }
+  
+  /* Lista de classes (radio buttons) */
+  .classes-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 25px;
+    gap: 6px; /* Espaçamento menor entre os checkboxes */
+  }
+  
+  .class-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #ffffff;
+    padding: 6px 10px; /* Espaçamento menor */
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    flex: 1 1 calc(20% - 12px); /* 5 itens por linha (100% / 5 = 20%) */
+    box-sizing: border-box;
+  }
+  
+  .class-checkbox:hover {
+    background-color: #f1f1f1;
+    border-color: #ccc;
+  }
+  
+  .class-checkbox input {
+    margin: 0;
+    cursor: pointer;
+  }
+  
+  .class-checkbox label {
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+  }
+  
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .user-classes-content {
+      width: 90%;
+      padding: 15px;
+    }
+  
+    .user-item {
+      padding: 10px;
+    }
+  
+    .user-item h3 {
+      font-size: 16px;
+    }
+  
+    .classes-list {
+      flex-direction: column; /* Checkboxes ficam um sobre o outro em telas pequenas */
+      gap: 4px;
+    }
+  
+    .class-checkbox {
+      flex: 1 1 100%; /* Cada checkbox ocupa 100% da largura em telas pequenas */
+      padding: 4px 8px;
+    }
+  }

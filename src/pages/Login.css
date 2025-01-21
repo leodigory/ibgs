@@ -1,0 +1,218 @@
+/* Estilos gerais */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5dc; /* Bege claro */
+  background-image: url('/public/login-image1.jpg'); /* Imagem de fundo */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Corrigido para 100vh */
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+/* Container principal */
+.login-page {
+  display: flex;
+  background-color: rgba(255, 255, 255, 0.02); /* Branco translúcido */
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Lado esquerdo (formulário) */
+.login-container {
+  flex: 1;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(43, 27, 4, 0.8); /* Bege escuro translúcido */
+}
+
+
+.church-logo {
+  width: 120px; /* Ajuste o tamanho da logo */
+  height: auto; /* Mantém a proporção */
+  margin-bottom: 20px; /* Espaço abaixo da logo */
+}
+
+
+/* Título */
+.login-container h1 {
+  color: #f3d5b1; /* Bege escuro */
+  margin-bottom: 20px;
+  font-size: 25px;
+  font-weight: 600;
+  align-items: center;
+}
+
+/* Campos de entrada */
+.login-container input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.8); /* Branco translúcido */
+  opacity: 75%;
+}
+
+.login-container input:focus {
+  border-color: #8b7355; /* Bege escuro */
+  box-shadow: 0 0 8px rgba(139, 115, 85, 0.3); /* Sombra sutil ao focar */
+}
+
+/* Botão */
+.login-container button {
+  width: 100%;
+  padding: 12px;
+  background-color: #8b7355; /* Bege escuro */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-container button:hover {
+  background-color: #6b5a45; /* Bege mais escuro */
+  transform: scale(1.02); /* Efeito de escala ao passar o mouse */
+}
+
+.login-container button:active {
+  transform: scale(0.98); /* Efeito de clique */
+}
+
+/* Estilo para o texto de cadastro */
+.signup-text {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #8b7355; /* Bege escuro */
+  cursor: pointer;
+  text-align: center;
+}
+
+.signup-text span {
+  color: #d4ba99; /* Bege mais escuro */
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.signup-text:hover span {
+  color: #fcad45; /* Bege escuro */
+}
+
+.success-message {
+  color: green;
+  font-size: var(--success-font-size, 14px); /* Tamanho da fonte padrão */
+  font-weight: bold; /* Aplica negrito */
+  margin-top: 10px;
+  text-align: center;
+  text-shadow: var(--success-shadow, 1px 1px 4px rgb(0, 0, 0)); /* Sombra padrão */
+}
+
+.error-message {
+  color: rgb(255, 0, 0);
+  font-size: var(--error-font-size, 14px); /* Tamanho da fonte padrão */
+  font-weight: bold; /* Aplica negrito */
+  margin-top: 10px;
+  text-align: center;
+  text-shadow: var(--error-shadow, 2px 1px 4px rgb(0, 0, 0)); /* Sombra padrão */
+}
+
+/* Responsividade para celulares */
+@media (max-width: 768px) {
+  body {
+    margin: 0;
+    background-color: #f5f5dc; /* Fundo bege claro para fallback */
+    background-image: url('/public/login-image.jpg'); /* Imagem de fundo para celulares */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .login-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    background-color: transparent;
+  }
+
+  .login-container {
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo preto translúcido */
+    padding: 50px;
+    border-radius: 15px; /* Bordas levemente arredondadas */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra mais pronunciada */
+    width: 80%;
+    max-width: 350px; /* Largura máxima reduzida para um formato mais quadrado */
+    text-align: center;
+  }
+
+  .church-logo {
+    width: 100px; /* Reduzi o tamanho da logo */
+    margin-bottom: 0px; /* Diminui o espaço abaixo da logo */
+  }
+
+  .login-container h1 {
+    font-size: 20px;
+    margin-bottom: 10px; /* Diminui o espaço abaixo do título */
+    color: #ffffff; /* Cor do título ajustada para melhor contraste12 */
+  }
+
+  .login-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+
+  .login-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #8b7355; /* Bege escuro */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .login-container button:hover {
+    background-color: #6b5a45; /* Bege mais escuro */
+  }
+
+  .signup-text {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #ffffff; 
+  }
+
+  .signup-text span {
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
