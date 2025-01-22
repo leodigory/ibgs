@@ -2,19 +2,38 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
-import { doc, getDoc, collection, setDoc, getDocs } from 'firebase/firestore'; // Usamos setDoc em vez de addDoc
+import { doc, getDoc, collection, setDoc, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
-import { fetchAllowedTabs } from '../services/roleService'; // Serviço para buscar abas permitidas
-import { convertToBase64, uploadPhoto } from '../services/imageService'; // Serviço para manipulação de imagens
-import { renderMenu } from './tabsConfig'; // Importa a função de renderização
+import { fetchAllowedTabs } from '../services/roleService';
+import { convertToBase64, uploadPhoto } from '../services/imageService';
+import { renderMenu } from './tabsConfig';
+import { fetchUserData } from '../services/userService'; // Importe o serviço
 import './SideMenu.css';
 
 function SideMenu({ role, userName, userPhoto, userId }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [photoURL, setPhotoURL] = useState(userPhoto || '/default-profile.png');
   const [allowedTabs, setAllowedTabs] = useState([]); // Abas permitidas para o usuário
+  const [acessos, setAcessos] = useState(''); // Estado para armazenar o campo 'acessos'
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
+
+  // Busca os dados do usuário, incluindo 'acessos', ao carregar o componente ou quando o userId mudar
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userData = await fetchUserData(); // Busca os dados do usuário
+        if (userData) {
+          setPhotoURL(userData.userPhoto); // Atualiza a foto do perfil
+          setAcessos(userData.acessos); // Atualiza o campo 'acessos'
+        }
+      } catch (error) {
+        console.error('Erro ao buscar os dados do usuário:', error);
+      }
+    };
+
+    fetchData();
+  }, [userId]);
 
   // Função para sincronizar as abas com o Firebase
   const syncTabsWithFirebase = async (tabs) => {
@@ -79,25 +98,6 @@ function SideMenu({ role, userName, userPhoto, userId }) {
     fetchTabs(); // Chama a função para buscar as abas permitidas
   }, [role]); // Executa sempre que o role mudar
 
-  // Busca a foto do perfil do Firestore ao carregar o componente ou quando o userId mudar
-  useEffect(() => {
-    const fetchPhotoURL = async () => {
-      if (userId) {
-        try {
-          const userDoc = await getDoc(doc(db, 'users', userId));
-          if (userDoc.exists()) {
-            const userData = userDoc.data();
-            setPhotoURL(userData.photoURL || '/default-profile.png');
-          }
-        } catch (error) {
-          console.error('Erro ao buscar a foto do perfil:', error);
-        }
-      }
-    };
-
-    fetchPhotoURL();
-  }, [userId]);
-
   const toggleMenu = () => {
     setIsExpanded(!isExpanded);
   };
@@ -157,7 +157,8 @@ function SideMenu({ role, userName, userPhoto, userId }) {
           <div className="role-tag">
             <p>Classe: {role}</p>
           </div>
-          <p className="role-info">Acesso como {role} liberado</p>
+          <p className="role-info">{role} {acessos} liberado!</p>
+      
         </div>
       </div>
       {/* Renderiza o menu usando a função importada */}

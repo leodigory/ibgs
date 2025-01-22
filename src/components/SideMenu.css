@@ -29,6 +29,15 @@
   margin: 0;
   display: none;
   flex-grow: 1; /* Faz o conteúdo ocupar o espaço disponível */
+  overflow-y: auto; /* Adiciona barra de rolagem vertical quando necessário */
+  scrollbar-width: none; /* Oculta a barra de rolagem no Firefox */
+  -ms-overflow-style: none; /* Oculta a barra de rolagem no IE/Edge */
+}
+
+/* Oculta a barra de rolagem no Chrome, Safari e outros navegadores WebKit */
+.side-menu ul::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 .side-menu.expanded ul {
@@ -169,13 +178,18 @@
 
 .profile-info p {
   margin: 0;
-  font-size: 0.9em;
+  font-size: 1em;
   color: rgba(255, 255, 255, 0.8); /* Texto com transparência */
 }
 
 .profile-info .role-info {
-  font-size: 0.8em;
-  color: rgba(255, 255, 255, 0.6); /* Texto menor e mais claro */
+  font-size: 0.7em;
+  color: rgb(255, 255, 255); /* Cor do texto */
+  margin-top: 5px; /* Espaçamento acima do texto */
+  margin-bottom: -10px; /* Espaçamento abaixo do texto (ajustado para positivo) */
+  text-transform: uppercase; /* Transforma o texto em caixa alta */
+  font-weight: bold; /* Aplica negrito ao texto */
+  line-height: 1.4; /* Altura da linha para melhor legibilidade */
 }
 
 /* Tarja branca atrás do texto "Classe: (role)" */
