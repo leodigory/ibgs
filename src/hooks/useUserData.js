@@ -7,6 +7,7 @@ export const useUserData = () => {
   const [userName, setUserName] = useState('');
   const [userPhoto, setUserPhoto] = useState('/default-profile.png');
   const [userId, setUserId] = useState(null);
+  const [acessos, setAcessos] = useState([]); // Estado para armazenar os acessos
   const location = useLocation();
 
   useEffect(() => {
@@ -17,6 +18,7 @@ export const useUserData = () => {
         setUserName(location.state.userName);
         setUserPhoto(location.state.userPhoto || '/default-profile.png');
         setUserId(location.state.userId);
+        setAcessos(location.state.acessos || []); // Define os acessos (padrão: array vazio)
       } else {
         // Caso contrário, busque os dados do Firestore
         const userData = await fetchUserData();
@@ -25,6 +27,7 @@ export const useUserData = () => {
           setUserName(userData.userName);
           setUserPhoto(userData.userPhoto);
           setUserId(userData.userId);
+          setAcessos(userData.acessos || []); // Define os acessos (padrão: array vazio)
         }
       }
     };
@@ -32,5 +35,5 @@ export const useUserData = () => {
     loadUserData(); // Executa a função para carregar os dados
   }, [location.state]); // Dependência: executa quando location.state muda
 
-  return { role, userName, userPhoto, userId }; // Retorna os dados do usuário
+  return { role, userName, userPhoto, userId, acessos }; // Retorna os dados do usuário, incluindo acessos
 };

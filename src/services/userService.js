@@ -26,14 +26,14 @@ export const getUserData = async (uid) => {
         role: userData.role || "guest", // Role do usuário (padrão: "guest")
         name: userData.name || "Usuário", // Nome do usuário (padrão: "Usuário")
         photoURL: userData.photoURL || "/default-profile.png", // Foto do usuário (padrão: "/default-profile.png")
-        acessos: userData.acessos || "", // Campo 'acessos' (padrão: vazio)
+        acessos: userData.acessos || [], // Campo 'acessos' (padrão: array vazio)
       };
     }
     return {
       role: "guest",
       name: "Usuário",
       photoURL: "/default-profile.png",
-      acessos: "", // Campo 'acessos' padrão
+      acessos: [], // Campo 'acessos' padrão como array vazio
     }; // Dados padrão caso o documento não exista
   } catch (error) {
     console.error("Erro ao buscar os dados do usuário:", error.message);
@@ -52,10 +52,16 @@ export const fetchUserData = async () => {
         userName: userData.name,
         userPhoto: userData.photoURL,
         userId: user.uid,
-        acessos: userData.acessos, // Adiciona o campo 'acessos'
+        acessos: userData.acessos || [], // Adiciona o campo 'acessos' (padrão: array vazio)
       };
     }
-    return null; // Retorna null se não houver usuário autenticado
+    return {
+      role: "guest",
+      userName: "Usuário",
+      userPhoto: "/default-profile.png",
+      userId: null,
+      acessos: [], // Campo 'acessos' padrão como array vazio
+    }; // Dados padrão caso não haja usuário autenticado
   } catch (error) {
     console.error("Erro ao buscar os dados do usuário:", error.message);
     throw error;
