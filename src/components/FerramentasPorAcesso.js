@@ -17,7 +17,7 @@ function AcessosPorUsuario({ onClose }) {
       const usuariosList = [];
       usuariosSnapshot.forEach((doc) => {
         const usuario = { id: doc.id, ...doc.data() };
-        if (usuario.role === 'liderança') {
+        if (usuario.role === 'liderança', 'administrador') {
           usuariosList.push(usuario);
         }
       });
