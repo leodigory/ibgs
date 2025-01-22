@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Home from './pages/Home';
-import FerramentasADM from './pages/FerramentasADM'; // Importe a página FerramentasADM
-import FerramentasLider from './pages/FerramentasLider'; // Importe a página FerramentasLider
-import PrivateRoute from './components/PrivateRoute'; // Importa o PrivateRoute
+import FerramentasADM from './pages/FerramentasADM';
+import FerramentasLider from './pages/FerramentasLider';
+import PrivateRoute from './components/PrivateRoute';
+import { initializeFerramentasLider } from './services/FerramentasL'; // Atualize o nome do arquivo aqui
 
 function App() {
+  // Use o useEffect para chamar a função de inicialização ao montar o componente
+  useEffect(() => {
+    initializeFerramentasLider();
+  }, []); // O array vazio garante que isso seja executado apenas uma vez
+
   return (
     <Router>
       <Routes>

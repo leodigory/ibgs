@@ -2,16 +2,20 @@ import React, { useState } from 'react';
 import SideMenu from '../components/SideMenu';
 import { useUserData } from '../hooks/useUserData'; // Importe o hook
 import Classes from '../components/Classes'; // Importe o componente Classes
-import UserClasses from '../components/ClassesUser'; // Note o "U" maiúsculo
+import UserClasses from '../components/ClassesUser'; // Importe o componente UserClasses
+import Acessos from '../components/Acessos'; // Importe o componente Acessos
+import FerramentasPorAcesso from '../components/FerramentasPorAcesso'; // Importe o componente FerramentasPorAcesso
 import './FerramentasADM.css'; // Importe os estilos da página
 
 function FerramentasADM() {
-  // Usando o hook para obter os dados do usuárrio
+  // Usando o hook para obter os dados do usuário
   const { role, userName, userPhoto, userId } = useUserData();
 
   // Estados para controlar a exibição dos modais
   const [showClasses, setShowClasses] = useState(false); // Modal Classes
   const [showUserClasses, setShowUserClasses] = useState(false); // Modal UserClasses
+  const [showAcessos, setShowAcessos] = useState(false); // Modal Acessos
+  const [showFerramentasPorAcesso, setShowFerramentasPorAcesso] = useState(false); // Modal FerramentasPorAcesso
   const [expandedGroupIndex, setExpandedGroupIndex] = useState(null);
 
   // Função para expandir/retrair grupos de botões
@@ -55,13 +59,31 @@ function FerramentasADM() {
             )}
           </div>
 
-          {/* Grupo 2: Outras Ferramentas */}
+          {/* Grupo 2: Gerenciamento de Acessos */}
           <div
             className={`button-group ${expandedGroupIndex === 1 ? 'expanded' : ''}`}
             onClick={() => toggleGroup(1)}
           >
-            <h2>Outras Ferramentas</h2>
+            <h2>Gerenciamento de Acessos</h2>
             {expandedGroupIndex === 1 && (
+              <>
+                <button onClick={(e) => { e.stopPropagation(); setShowAcessos(true); }}>
+                  Criar Novos Acessos
+                </button>
+                <button onClick={(e) => { e.stopPropagation(); setShowFerramentasPorAcesso(true); }}>
+                  Alterar Ferramentas por Acesso
+                </button>
+              </>
+            )}
+          </div>
+
+          {/* Grupo 3: Outras Ferramentas */}
+          <div
+            className={`button-group ${expandedGroupIndex === 2 ? 'expanded' : ''}`}
+            onClick={() => toggleGroup(2)}
+          >
+            <h2>Outras Ferramentas</h2>
+            {expandedGroupIndex === 2 && (
               <>
                 <button onClick={(e) => { e.stopPropagation(); alert('Botão 1 clicado!'); }}>
                   Botão 1
@@ -81,6 +103,14 @@ function FerramentasADM() {
 
         {/* Exibe o modal UserClasses se showUserClasses for true */}
         {showUserClasses && <UserClasses onClose={() => setShowUserClasses(false)} />}
+
+        {/* Exibe o modal Acessos se showAcessos for true */}
+        {showAcessos && <Acessos onClose={() => setShowAcessos(false)} />}
+
+        {/* Exibe o modal FerramentasPorAcesso se showFerramentasPorAcesso for true */}
+        {showFerramentasPorAcesso && (
+          <FerramentasPorAcesso onClose={() => setShowFerramentasPorAcesso(false)} />
+        )}
       </div>
     </div>
   );
