@@ -36,6 +36,7 @@
   font-size: 24px;
   margin-bottom: 20px;
   color: #333;
+  
 }
 
 /* Estilos para a lista de grupos de botões */
@@ -63,6 +64,7 @@
   margin-bottom: 10px;
   padding-top: 0px;
   margin-top: 0px;
+  text-align: center;
 }
 
 /* Remove a margem direita do último grupo em cada linha */
