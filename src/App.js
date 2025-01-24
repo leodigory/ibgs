@@ -6,13 +6,10 @@ import Home from './pages/Home';
 import FerramentasADM from './pages/FerramentasADM';
 import FerramentasLider from './pages/FerramentasLider';
 import PrivateRoute from './components/PrivateRoute';
-import { initializeFerramentasLider } from './services/FerramentasL'; // Atualize o nome do arquivo aqui
+
 
 function App() {
-  // Use o useEffect para chamar a função de inicialização ao montar o componente
-  useEffect(() => {
-    initializeFerramentasLider();
-  }, []); // O array vazio garante que isso seja executado apenas uma vez
+  
 
   return (
     <Router>

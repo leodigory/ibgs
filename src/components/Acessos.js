@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs, doc, setDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-import { initializeFerramentasLider } from '../services/FerramentasL';
 import './Acessos.css';
 
 function Acessos({ onClose }) {
@@ -12,9 +11,7 @@ function Acessos({ onClose }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Inicializa a coleção FerramentasLider (se necessário)
-        await initializeFerramentasLider();
-
+        
         // Busca os acessos do Firestore
         const acessosSnapshot = await getDocs(collection(db, 'acessos'));
         const acessosList = [];
