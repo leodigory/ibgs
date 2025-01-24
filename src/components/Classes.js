@@ -9,6 +9,7 @@ function Classes({ onClose }) {
   const [tabs, setTabs] = useState([]); // Lista de abas disponíveis
   const [loading, setLoading] = useState(false); // Estado de carregamento
   const [error, setError] = useState(''); // Mensagem de erro
+  const [filterText, setFilterText] = useState(''); // Estado para o filtro de texto
 
   // Busca as classes e as abas do Firestore ao carregar o componente
   useEffect(() => {
@@ -117,12 +118,25 @@ function Classes({ onClose }) {
     setError(''); // Limpa a mensagem de erro ao digitar
   };
 
+  // Função para filtrar as classes com base no texto digitado
+  const filteredClasses = classes.filter((cls) =>
+    cls.name.toLowerCase().includes(filterText.toLowerCase())
+  );
+
   return (
     <div className="classes-modal">
       <div className="classes-content">
         {/* Cabeçalho do modal */}
         <div className="modal-header">
           <h2>Gerenciar Classes</h2>
+          <div className="filter-classes">
+            <input
+              type="text"
+              placeholder="Filtrar classes..."
+              value={filterText}
+              onChange={(e) => setFilterText(e.target.value)}
+            />
+          </div>
           <button className="close-button" onClick={onClose}>X</button>
         </div>
 
@@ -146,26 +160,30 @@ function Classes({ onClose }) {
           <p>Carregando...</p>
         ) : (
           <div className="classes-list">
-            {classes.map((cls) => (
-              <div key={cls.id} className="class-item">
-                <h3>{cls.name}</h3>
-                <div className="tabs-list">
-                  {tabs.map((tab) => (
-                    <label key={tab} className="tab-checkbox">
-                      <input
-                        type="checkbox"
-                        checked={cls.roles.includes(tab)}
-                        onChange={() => handleTabSelection(cls.id, tab)}
-                        className="hidden-checkbox"
-                      />
-                      <div className="checkmark"></div>
-                      {tab}
-                    </label>
-                  ))}
+            {filteredClasses.length > 0 ? (
+              filteredClasses.map((cls) => (
+                <div key={cls.id} className="class-item">
+                  <h3>{cls.name}</h3>
+                  <div className="tabs-list">
+                    {tabs.map((tab) => (
+                      <label key={tab} className="tab-checkbox">
+                        <input
+                          type="checkbox"
+                          checked={cls.roles.includes(tab)}
+                          onChange={() => handleTabSelection(cls.id, tab)}
+                          className="hidden-checkbox"
+                        />
+                        <div className="checkmark"></div>
+                        {tab}
+                      </label>
+                    ))}
+                  </div>
+                  <button onClick={() => handleDeleteClass(cls.id)}>Excluir</button>
                 </div>
-                <button onClick={() => handleDeleteClass(cls.id)}>Excluir</button>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p className="no-results">Classe não existe na lista</p>
+            )}
           </div>
         )}
       </div>
@@ -173,4 +191,4 @@ function Classes({ onClose }) {
   );
 }
 
-export default Classes;
+export default Classes; 

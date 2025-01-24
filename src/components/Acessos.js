@@ -7,11 +7,11 @@ function Acessos({ onClose }) {
   const [novoAcesso, setNovoAcesso] = useState('');
   const [acessos, setAcessos] = useState([]);
   const [ferramentas, setFerramentas] = useState([]);
+  const [filterText, setFilterText] = useState(''); // Estado para o filtro de texto
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        
         // Busca os acessos do Firestore
         const acessosSnapshot = await getDocs(collection(db, 'acessos'));
         const acessosList = [];
@@ -78,14 +78,29 @@ function Acessos({ onClose }) {
     }
   };
 
+  // Função para filtrar acessos com base no texto digitado
+  const filteredAcessos = acessos.filter((acesso) =>
+    acesso.name.toLowerCase().includes(filterText.toLowerCase())
+  );
+
   return (
     <div className="acessos-modal">
       <div className="acessos-content">
+        {/* Cabeçalho do modal */}
         <div className="modal-header">
           <h2>Gerenciar Acessos</h2>
+          <div className="filter-acessos">
+            <input
+              type="text"
+              placeholder="Filtrar acessos..."
+              value={filterText}
+              onChange={(e) => setFilterText(e.target.value)}
+            />
+          </div>
           <button className="close-button" onClick={onClose}>X</button>
         </div>
 
+        {/* Formulário para adicionar novo acesso */}
         <div className="add-acesso">
           <input
             type="text"
@@ -96,28 +111,33 @@ function Acessos({ onClose }) {
           <button onClick={handleAdicionarAcesso}>Adicionar</button>
         </div>
 
+        {/* Lista de acessos */}
         <div className="acessos-list">
-          {acessos.map((acesso) => (
-            <div key={acesso.id} className="acesso-item">
-              <h3>{acesso.name}</h3>
-              <button className="excluir-button" onClick={() => handleExcluirAcesso(acesso.id)}>Excluir</button>
+          {filteredAcessos.length > 0 ? (
+            filteredAcessos.map((acesso) => (
+              <div key={acesso.id} className="acesso-item">
+                <h3>{acesso.name}</h3>
+                <button className="excluir-button" onClick={() => handleExcluirAcesso(acesso.id)}>Excluir</button>
 
-              <div className="ferramentas-list">
-                {ferramentas.map((ferramenta) => (
-                  <div key={ferramenta.id} className="ferramenta-item">
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={acesso.ferramentas.includes(ferramenta.id)}
-                        onChange={() => handleToggleFerramenta(acesso.id, ferramenta.id)}
-                      />
-                      {ferramenta.name}
-                    </label>
-                  </div>
-                ))}
+                <div className="ferramentas-list">
+                  {ferramentas.map((ferramenta) => (
+                    <div key={ferramenta.id} className="ferramenta-item">
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={acesso.ferramentas.includes(ferramenta.id)}
+                          onChange={() => handleToggleFerramenta(acesso.id, ferramenta.id)}
+                        />
+                        {ferramenta.name}
+                      </label>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p className="no-results">Acesso não existe na lista.</p>
+          )}
         </div>
       </div>
     </div>

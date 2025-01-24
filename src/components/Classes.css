@@ -8,7 +8,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Garante que o modal fique acima de outros elementos */
+  z-index: 1000;
 }
 
 .classes-content {
@@ -18,15 +18,15 @@
   width: 600px;
   max-width: 90%;
   max-height: 80vh;
-  overflow-y: auto; /* Barra de rolagem vertical */
+  overflow-y: auto;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* Cabeçalho do modal */
 .modal-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 10px; /* Espaçamento entre os elementos */
   margin-bottom: 20px;
 }
 
@@ -35,6 +35,28 @@
   font-size: 24px;
   font-weight: 600;
   color: #333;
+  white-space: nowrap; /* Impede que o título quebre em várias linhas */
+}
+
+/* Campo de filtro */
+.filter-classes {
+  flex: 1; /* Ocupa o espaço restante */
+  min-width: 150px; /* Largura mínima para o campo de filtro */
+}
+
+.filter-classes input {
+  width: 93%;
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #333;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.filter-classes input:focus {
+  border-color: #4caf50;
 }
 
 .close-button {
@@ -44,10 +66,63 @@
   cursor: pointer;
   color: #666;
   transition: color 0.2s ease;
+  white-space: nowrap; /* Impede que o botão quebre em várias linhas */
 }
 
 .close-button:hover {
   color: #000;
+}
+
+/* Mensagem de erro ou aviso */
+.error-message {
+  color: #ff4d4d;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.no-results {
+  text-align: center;
+  color: #ff4d4d;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+/* Formulário para adicionar nova classe */
+.add-class {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.add-class input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #333;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.add-class input:focus {
+  border-color: #4caf50;
+}
+
+.add-class button {
+  padding: 12px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.add-class button:hover {
+  background-color: #45a049;
 }
 
 /* Lista de classes */
@@ -64,7 +139,7 @@
   background-color: #f9f9f9;
   border: 1px solid #e0e0e0;
   transition: box-shadow 0.2s ease, transform 0.2s ease;
-  position: relative; /* Para posicionar o botão Excluir */
+  position: relative;
 }
 
 .class-item:hover {
@@ -73,15 +148,15 @@
 }
 
 .class-item h3 {
-  margin: 0 0 10px 0; /* Espaçamento menor abaixo do nome da classe */
+  margin: 0 0 10px 0;
   font-size: 18px;
-  font-weight: 700; /* Negrito */
-  color: #8b7355; /* Cor bege */
+  font-weight: 700;
+  color: #8b7355;
 }
 
 /* Botão de excluir classe */
 .class-item button {
-  position: absolute; /* Posiciona o botão no canto superior direito */
+  position: absolute;
   top: 15px;
   right: 15px;
   padding: 6px 12px;
@@ -103,8 +178,8 @@
 .tabs-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px; /* Espaçamento menor entre as abas */
-  margin-bottom: 10px; /* Espaçamento menor abaixo das abas */
+  gap: 8px;
+  margin-bottom: 10px;
 }
 
 .tab-checkbox {
@@ -112,12 +187,12 @@
   align-items: center;
   gap: 8px;
   background-color: #ffffff;
-  padding: 8px 12px; /* Espaçamento menor */
+  padding: 8px 12px;
   border-radius: 6px;
   border: 1px solid #e0e0e0;
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease;
-  position: relative; /* Para posicionar o checkbox personalizado */
+  position: relative;
 }
 
 .tab-checkbox:hover {
@@ -168,42 +243,4 @@
 /* Mostra o ícone de check quando o checkbox está marcado */
 .hidden-checkbox:checked ~ .checkmark::after {
   display: block;
-}
-
-/* Formulário para adicionar nova classe */
-.add-class {
-  margin-top: 25px;
-  display: flex;
-  gap: 10px;
-}
-
-.add-class input {
-  flex: 1;
-  padding: 12px;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  font-size: 14px;
-  color: #333;
-  outline: none;
-  transition: border-color 0.2s ease;
-}
-
-.add-class input:focus {
-  border-color: #4caf50;
-}
-
-.add-class button {
-  padding: 12px 20px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: background-color 0.2s ease;
-}
-
-.add-class button:hover {
-  background-color: #45a049;
 }

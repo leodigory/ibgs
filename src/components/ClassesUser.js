@@ -7,6 +7,7 @@ function UserClasses({ onClose }) {
   const [users, setUsers] = useState([]); // Lista de usuários
   const [classes, setClasses] = useState([]); // Lista de classes
   const [selectedClass, setSelectedClass] = useState({}); // Classe selecionada para cada usuário
+  const [filterText, setFilterText] = useState(''); // Estado para o filtro de texto
 
   // Busca os usuários e as classes do Firestore ao carregar o componente
   useEffect(() => {
@@ -45,6 +46,11 @@ function UserClasses({ onClose }) {
     }
   };
 
+  // Função para filtrar os usuários com base no texto digitado
+  const filteredUsers = users.filter((user) =>
+    user.name.toLowerCase().includes(filterText.toLowerCase())
+  );
+
   return (
     <div className="user-classes-modal">
       <div className="user-classes-content">
@@ -54,27 +60,41 @@ function UserClasses({ onClose }) {
           <button className="close-button" onClick={onClose}>X</button>
         </div>
 
+        {/* Campo de filtro */}
+        <div className="filter-users">
+          <input
+            type="text"
+            placeholder="Filtrar usuários..."
+            value={filterText}
+            onChange={(e) => setFilterText(e.target.value)}
+          />
+        </div>
+
         {/* Lista de usuários e classes */}
         <div className="users-list">
-          {users.map((user) => (
-            <div key={user.id} className="user-item">
-              <h3>{user.name}</h3>
-              <div className="classes-list">
-                {classes.map((cls) => (
-                  <label key={cls.id} className="class-checkbox">
-                    <input
-                      type="radio"
-                      name={`user-${user.id}`}
-                      value={cls.name}
-                      checked={selectedClass[user.id] === cls.name || user.role === cls.name}
-                      onChange={() => handleClassChange(user.id, cls.name)}
-                    />
-                    {cls.name}
-                  </label>
-                ))}
+          {filteredUsers.length > 0 ? (
+            filteredUsers.map((user) => (
+              <div key={user.id} className="user-item">
+                <h3>{user.name}</h3>
+                <div className="classes-list">
+                  {classes.map((cls) => (
+                    <label key={cls.id} className="class-checkbox">
+                      <input
+                        type="radio"
+                        name={`user-${user.id}`}
+                        value={cls.name}
+                        checked={selectedClass[user.id] === cls.name || user.role === cls.name}
+                        onChange={() => handleClassChange(user.id, cls.name)}
+                      />
+                      {cls.name}
+                    </label>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p className="no-results">Nenhum usuário encontrado com o nome "{filterText}".</p>
+          )}
         </div>
       </div>
     </div>

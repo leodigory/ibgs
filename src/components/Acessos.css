@@ -9,7 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Garante que o modal fique acima de outros elementos */
+  z-index: 1000;
 }
 
 .acessos-content {
@@ -19,15 +19,15 @@
   width: 600px;
   max-width: 90%;
   max-height: 80vh;
-  overflow-y: auto; /* Barra de rolagem vertical */
+  overflow-y: auto;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* Cabeçalho do modal */
 .modal-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 10px; /* Espaçamento entre os elementos */
   margin-bottom: 20px;
 }
 
@@ -36,6 +36,28 @@
   font-size: 24px;
   font-weight: 600;
   color: #333;
+  white-space: nowrap; /* Impede que o título quebre em várias linhas */
+}
+
+/* Campo de filtro */
+.filter-acessos {
+  flex: 1; /* Ocupa o espaço restante */
+  min-width: 150px; /* Largura mínima para o campo de filtro */
+}
+
+.filter-acessos input {
+  width: 93%; /* Largura do campo de filtro */
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #333;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.filter-acessos input:focus {
+  border-color: #4caf50;
 }
 
 .close-button {
@@ -45,10 +67,19 @@
   cursor: pointer;
   color: #666;
   transition: color 0.2s ease;
+  white-space: nowrap; /* Impede que o botão quebre em várias linhas */
 }
 
 .close-button:hover {
   color: #000;
+}
+
+/* Mensagem de "Acesso não encontrado" */
+.no-results {
+  text-align: center;
+  color: #ff4d4d;
+  font-size: 16px;
+  margin-top: 20px;
 }
 
 /* Formulário de adicionar acesso */

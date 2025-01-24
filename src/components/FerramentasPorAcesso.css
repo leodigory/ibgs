@@ -50,15 +50,17 @@
   color: #000;
 }
 
+/* Campo de filtro ajustado para 50% da largura e centralizado */
 .filtro-input {
-  width: 100%;
+  width: 94%; /* Largura do campo de filtro */
   padding: 12px;
   border: 1px solid #e0e0e0;
   border-radius: 6px;
   font-size: 14px;
   color: #333;
   outline: none;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
+  
 }
 
 .usuarios-list {
