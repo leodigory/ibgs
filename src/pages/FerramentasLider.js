@@ -123,6 +123,19 @@ function FerramentasLideranca() {
                           </button>
                         </>
                       )}
+                      {grupo.titulo === "Louvor" && (
+                        <>
+                          <button onClick={(e) => { e.stopPropagation(); setShowLouvor(true); }}>
+                            Louvor
+                          </button>
+                          <button onClick={(e) => { e.stopPropagation(); setShowMensagem(true); }}>
+                            Mensagem
+                          </button>
+                          <button onClick={(e) => { e.stopPropagation(); setShowEscala(true); }}>
+                            Escala
+                          </button>
+                        </>
+                      )}
                       {grupo.titulo === "Gerenciamento De Equipes" && (
                         <>
                           <button onClick={(e) => { e.stopPropagation(); setShowFerramenta1(true); }}>

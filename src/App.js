@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
@@ -6,10 +6,18 @@ import Home from './pages/Home';
 import FerramentasADM from './pages/FerramentasADM';
 import FerramentasLider from './pages/FerramentasLider';
 import PrivateRoute from './components/PrivateRoute';
-
+import { lerTitulosDaPagina } from './services/lerTitulosDaPagina'; // Importe o serviço
 
 function App() {
-  
+  const executado = useRef(false); // Variável de controle
+
+  // Executa a função para ler títulos da página após o render
+  useEffect(() => {
+    if (!executado.current) { // Verifica se já foi executado
+      lerTitulosDaPagina(FerramentasLider); // Passa o componente como parâmetro
+      executado.current = true; // Marca como executado
+    }
+  }, []); // Executa apenas uma vez após o render inicial
 
   return (
     <Router>
