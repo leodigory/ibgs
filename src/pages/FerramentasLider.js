@@ -123,7 +123,7 @@ function FerramentasLideranca() {
                           </button>
                         </>
                       )}
-                      {grupo.titulo === "Gerencimaneto Louvor" && (
+                      {grupo.titulo === "Louvor" && (
                         <>
                           <button onClick={(e) => { e.stopPropagation(); setShowLouvor(true); }}>
                             Louvor

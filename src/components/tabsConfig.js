@@ -1,6 +1,7 @@
+// src/components/tabsConfig.js
 import React from 'react';
 
-export const renderMenu = (allowedTabs, navigate, isExpanded, photoURL, firstName, fileInputRef, handleLogout, acessos) => {
+export const renderMenu = (allowedTabs, navigate, isExpanded, photoURL, firstName, fileInputRef, handleLogout) => {
   return (
     <>
       {/* Lista de botões do menu */}
@@ -21,13 +22,6 @@ export const renderMenu = (allowedTabs, navigate, isExpanded, photoURL, firstNam
           <li onClick={() => navigate('/ferramentas-lideranca')}>
             <img src="/ferramenta.png" alt="Ferramentas Lideranca" className="menu-item-icon" />
             {isExpanded && <span className="menu-item-text">Ferramentas Liderança</span>}
-          </li>
-        )}
-        {/* Nova Aba: Escala (aparece apenas se o campo "acessos" tiver texto) */}
-        {acessos && String(acessos).trim() !== "" && (
-          <li onClick={() => navigate('/escala')}>
-            <img src="/escala.png" alt="Escala" className="menu-item-icon" />
-            {isExpanded && <span className="menu-item-text">Escala</span>}
           </li>
         )}
         {allowedTabs.includes('Culto') && (
@@ -60,7 +54,6 @@ export const renderMenu = (allowedTabs, navigate, isExpanded, photoURL, firstNam
             {isExpanded && <span className="menu-item-text">Sobre</span>}
           </li>
         )}
-        
       </ul>
       {/* Círculo pequeno com a foto do perfil e texto abaixo (quando o menu está retraído) */}
       <div className="mini-profile-container">
