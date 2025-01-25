@@ -63,6 +63,7 @@
 }
 
 .side-menu ul li .menu-item-text {
+  
   display: none; /* Oculta o texto por padrão */
 }
 

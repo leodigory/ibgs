@@ -34,12 +34,16 @@ function FerramentasLideranca() {
     const fetchFerramentasLiberadas = async () => {
       const ferramentas = new Set(); // Usamos um Set para evitar duplicatas
 
+      console.log("Buscando documentos na coleção 'acessos'...");
+
       for (const acesso of acessos) {
         try {
+          console.log(`Buscando documento com ID: ${acesso} na coleção 'acessos'...`);
           const acessoDoc = await getDoc(doc(db, 'acessos', acesso)); // Busca o documento de acesso
 
           if (acessoDoc.exists()) {
             const ferramentasDoAcesso = acessoDoc.data().ferramentas || [];
+            console.log(`Ferramentas encontradas no acesso ${acesso}:`, ferramentasDoAcesso);
             ferramentasDoAcesso.forEach((ferramenta) => {
               ferramentas.add(ferramenta);
             });
@@ -52,6 +56,7 @@ function FerramentasLideranca() {
       }
 
       const ferramentasArray = Array.from(ferramentas);
+      console.log("Títulos liberados encontrados:", ferramentasArray);
 
       // Atualiza os grupos com base nas ferramentas liberadas
       const novosGrupos = ferramentasArray.map((ferramenta) => ({
@@ -123,7 +128,7 @@ function FerramentasLideranca() {
                           </button>
                         </>
                       )}
-                      {grupo.titulo === "Louvor" && (
+                      {grupo.titulo === "Ferramenta Louvor" && (
                         <>
                           <button onClick={(e) => { e.stopPropagation(); setShowLouvor(true); }}>
                             Louvor

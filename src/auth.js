@@ -1,6 +1,8 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore"; // Importa funções do Firestore
 import { auth, db } from './firebase'; // Importa auth e db
+import { lerTitulosDaPagina } from './services/lerTitulosDaPagina';
+import FerramentasLider from './pages/FerramentasLider';
 
 // Função para cadastrar um novo usuário
 export const signUp = async (email, password, additionalData) => {
@@ -27,7 +29,13 @@ export const signUp = async (email, password, additionalData) => {
 export const signIn = async (email, password) => {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    return userCredential.user;
+    const user = userCredential.user;
+
+    // Chama a função para ler títulos da página após o login
+    console.log("Usuário autenticado. Buscando títulos da página...");
+    lerTitulosDaPagina(FerramentasLider); // Passa o componente FerramentasLider como parâmetro
+
+    return user;
   } catch (error) {
     console.error("Erro ao fazer login:", error.message);
     throw error;

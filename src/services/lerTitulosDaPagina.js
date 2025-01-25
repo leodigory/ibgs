@@ -18,9 +18,15 @@ export const lerTitulosDaPagina = (componente) => {
       titulosEncontrados.push(match[1]); // Adiciona o título encontrado ao array
     }
 
+    // Exibe os títulos encontrados no console
+    console.log("Títulos encontrados:", titulosEncontrados);
+
     // Envia os títulos para o Firebase
     if (titulosEncontrados.length > 0) {
+      console.log("Enviando títulos para o Firebase...");
       enviarTitulosParaFirebase(titulosEncontrados);
+    } else {
+      console.log("Nenhum título encontrado para enviar.");
     }
   } catch (error) {
     console.error("Erro ao ler títulos da página:", error);

@@ -8,6 +8,7 @@ import { fetchAllowedTabs } from '../services/roleService';
 import { convertToBase64, uploadPhoto } from '../services/imageService';
 import { renderMenu } from './tabsConfig';
 import { fetchUserData } from '../services/userService'; // Importe o serviço
+
 import './SideMenu.css';
 
 function SideMenu({ role, userName, userPhoto, userId }) {
@@ -162,7 +163,7 @@ function SideMenu({ role, userName, userPhoto, userId }) {
         </div>
       </div>
       {/* Renderiza o menu usando a função importada */}
-      {renderMenu(allowedTabs, navigate, isExpanded, photoURL, firstName, fileInputRef, handleLogout)}
+      {renderMenu(allowedTabs, navigate, isExpanded, photoURL, firstName, fileInputRef, handleLogout, acessos)}
     </div>
   );
 }
