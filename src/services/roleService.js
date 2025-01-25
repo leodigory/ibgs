@@ -4,7 +4,7 @@ import { db } from '../firebase';
 
 export const fetchAllowedTabs = async (role) => {
   if (!role) {
-    return [];
+    return []; // Retorna um array vazio se o usuário não tiver um papel
   }
 
   try {
@@ -20,9 +20,9 @@ export const fetchAllowedTabs = async (role) => {
       }
     });
 
-    return allowedTabs;
+    return allowedTabs; // Retorna as abas permitidas para o papel do usuário
   } catch (error) {
     console.error('Erro ao buscar abas permitidas:', error);
-    return [];
+    return []; // Retorna um array vazio em caso de erro
   }
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Home from './pages/Home';
@@ -57,6 +57,9 @@ function App() {
             </PrivateRoute>
           }
         />
+
+        {/* Rota "catch-all": Redireciona para /home */}
+        <Route path="*" element={<Navigate to="/home" />} />
       </Routes>
     </Router>
   );
